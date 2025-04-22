@@ -1,18 +1,30 @@
-# Analisador Léxico para Linguagem Jander
+# Analisador Léxico para LA (Linguagem Algorítmica)
 
-Este projeto implementa um analisador léxico para linguagem Jander utilizando ANTLR4 ([ANother Tool for Language Recognition](https://www.antlr.org/)). O analisador é capaz de reconhecer tokens como identificadores, palavras-chave, operadores e constantes em um arquivo de texto contendo código da linguagem.
+Este projeto implementa um analisador léxico para a Linguagem Algorítmica (LA) desenvolvida pelo prof. Jander, no âmbito do DC/UFSCar. O analisador utiliza ANTLR4 ([ANother Tool for Language Recognition](https://www.antlr.org/)) para identificar tokens como identificadores, palavras-chave, operadores e constantes em um arquivo de texto contendo código da linguagem.
 
-## Alunos
-- Arthur Braga da Fonseca - RA: 811461
+## Membros do Grupo
 
+- [Arthur Braga da Fonseca - RA:811461]
+- [Nome do Aluno 2]
+- [Nome do Aluno 3]
 
 ## Estrutura do Projeto
 
 - `lexical.g4`: Arquivo de gramática ANTLR4 que define as regras léxicas da linguagem
 - `lexical.py`: Arquivo gerado pelo ANTLR4 contendo o analisador léxico
 - `main.py`: Script principal para execução do analisador
-- `entrada.txt`: Arquivo de exemplo contendo código na linguagem alvo
+- `entrada.txt`: Arquivo de exemplo contendo código na linguagem LA
 - `saida.txt`: Arquivo de saída gerado pelo analisador
+
+## Tratamento de Erros
+
+O analisador léxico identifica e reporta os seguintes erros:
+
+- Símbolos não identificados
+- Comentários não fechados na mesma linha
+- Cadeias de caracteres não fechadas na mesma linha
+
+Quando um erro léxico é encontrado, o programa interrompe a execução e reporta o erro, indicando o símbolo e a linha onde o erro ocorre.
 
 ## Bibliotecas Utilizadas
 
@@ -30,7 +42,7 @@ O analisador reconhece:
 - Identificadores: sequências de letras e números começando com letra
 - Números: inteiros e reais
 - Comentários: texto entre chaves `{}`
-- Texto: strings entre aspas duplas
+- Cadeias de caracteres: texto entre aspas duplas
 
 ## Como Executar
 
@@ -41,7 +53,7 @@ O analisador reconhece:
    ```
 3. Execute o programa passando o arquivo de entrada e o arquivo de saída:
    ```
-   python main.py entrada.txt saida.txt
+   python main.py <arquivo_de_entrada> <arquivo_de_saida>
    ```
 
 ## Exemplo de Uso
@@ -69,12 +81,61 @@ fim_algoritmo
 Arquivo de saída (`saida.txt`):
 
 ```
- '<algoritmo', ALGORITMO>
- '<declare', DECLARE>
- '<nome', IDENT>
- '<:', TWO_POINTS>
- '<literal', LITERAL>
- ...
+<'algoritmo','algoritmo'>
+<'declare','declare'>
+<'nome',IDENT>
+<':',':'>
+<'literal','literal'>
+<'declare','declare'>
+<'idade',IDENT>
+<':',':'>
+<'inteiro','inteiro'>
+<'leia','leia'>
+<'(','('>
+<'nome',IDENT>
+<')',')'>
+<'leia','leia'>
+<'(','('>
+<'idade',IDENT>
+<')',')'>
+<'escreva','escreva'>
+<'(','('>
+<'nome',IDENT>
+<',',','>
+<'" tem "',CADEIA>
+<',',','>
+<'idade',IDENT>
+<',',','>
+<'" anos."',CADEIA>
+<')',')'>
+<'fim_algoritmo','fim_algoritmo'>
+```
+
+## Exemplo de Erro Léxico
+
+Entrada com erro:
+
+```
+algoritmo
+	declare
+		nome~ literal
+	declare
+		idade: inteiro
+
+	leia(nome)
+	leia(idade)
+
+	escreva(nome, " tem ", idade, " anos.")
+fim_algoritmo
+```
+
+Saída produzida:
+
+```
+<'algoritmo','algoritmo'>
+<'declare','declare'>
+<'nome',IDENT>
+Linha 3: ~ - simbolo nao identificado
 ```
 
 ## Geração de Analisador
@@ -86,3 +147,4 @@ Para regenerar o analisador a partir da gramática:
    ```
    java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
    ```
+
