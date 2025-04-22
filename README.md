@@ -2,6 +2,10 @@
 
 Este projeto implementa um analisador léxico para linguagem Jander utilizando ANTLR4 ([ANother Tool for Language Recognition](https://www.antlr.org/)). O analisador é capaz de reconhecer tokens como identificadores, palavras-chave, operadores e constantes em um arquivo de texto contendo código da linguagem.
 
+## Alunos
+- Arthur Braga da Fonseca - RA: 811461
+
+
 ## Estrutura do Projeto
 
 - `lexical.g4`: Arquivo de gramática ANTLR4 que define as regras léxicas da linguagem
