@@ -5,8 +5,8 @@ Este projeto implementa um analisador léxico para a Linguagem Algorítmica (LA)
 ## Membros do Grupo
 
 - Arthur Braga da Fonseca - RA: 811461
-- Luiz Otávio
-- Leonardo
+- Luiz Otávio Teixeira Mello - 811967
+- Leonardo Triiltz Siqueira- 811904
 
 ## Estrutura do Projeto
 
