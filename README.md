@@ -24,10 +24,13 @@ O analisador léxico identifica e reporta os seguintes erros:
 
 Quando um erro léxico é encontrado, o programa interrompe a execução e reporta o erro, indicando o símbolo e a linha onde o erro ocorre.
 
+## Tecnologias Utilizadas
+
+- **Python 3**: Linguagem de programação utilizada para implementação
+
 ## Bibliotecas Utilizadas
 
 - **ANTLR4**: Framework para construção de analisadores lexicais e sintáticos
-- **Python 3**: Linguagem de programação utilizada para implementação
 - **antlr4-python3-runtime**: Biblioteca Python que permite a execução de analisadores gerados pelo ANTLR4
 
 ## Regras Léxicas
