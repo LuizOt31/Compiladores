@@ -1,7 +1,6 @@
 # Analisador Léxico para Linguagem Jander
 
-Este projeto implementa um analisador léxico para uma linguagem Jander utilizando ANTLR4 ([ANother Tool for Language Recognition](https://www.antlr.org/))
-. O analisador é capaz de reconhecer tokens como identificadores, palavras-chave, operadores e constantes em um arquivo de texto contendo código da linguagem.
+Este projeto implementa um analisador léxico para linguagem Jander utilizando ANTLR4 ([ANother Tool for Language Recognition](https://www.antlr.org/)). O analisador é capaz de reconhecer tokens como identificadores, palavras-chave, operadores e constantes em um arquivo de texto contendo código da linguagem.
 
 ## Estrutura do Projeto
 
@@ -83,7 +82,3 @@ Para regenerar o analisador a partir da gramática:
    ```
    java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
    ```
-
-## Contribuição
-
-Para contribuir com este projeto, siga os padrões de código existentes e adicione novos testes para novas funcionalidades.
