@@ -48,6 +48,9 @@ O analisador reconhece:
 ## Como Executar
 
 1. Certifique-se de ter o Python 3 instalado
+   ```
+   python3 --version
+   ```
 2. Instale o pacote antlr4-python3-runtime:
    ```
    pip install antlr4-python3-runtime
