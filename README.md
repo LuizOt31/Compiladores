@@ -4,9 +4,7 @@ Este projeto implementa um analisador léxico para a Linguagem Algorítmica (LA)
 
 ## Membros do Grupo
 
-- [Arthur Braga da Fonseca - RA:811461]
-- [Nome do Aluno 2]
-- [Nome do Aluno 3]
+- Arthur Braga da Fonseca - RA:811461
 
 ## Estrutura do Projeto
 
