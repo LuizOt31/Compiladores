@@ -5,12 +5,23 @@ import sys
 import re
 
 class CustomErrorListener(ErrorListener):
+    '''
+    Classe para tratar erros lexicos
+    Herda ErrorListener, para que em cada token que 
+    não for identificado, a classe será chamada para tratar.
+    '''
     def __init__(self, output):
         super().__init__()
         self.output = output
         self.error_found = False
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        '''
+        Funcao que realmente trata os erros de:
+            * comentários não fechados na mesma linha
+            * cadeias não fechadas
+            * simbolos não identificados
+        '''
         self.error_found = True
 
         # Comentário não fechado
@@ -28,15 +39,26 @@ class CustomErrorListener(ErrorListener):
             print(f"Linha {line}: {texto} - simbolo nao identificado", file=self.output)
 
 def main():
+    '''
+    Principal função do programa.
+    Le dois argumentos, os PATHs de arquivo de entrada e saída, respectivamente, e
+    imprime na saída os tokens com seus tipos no
+    estilo: <token, tipo token>
+    '''
+
     if len(sys.argv) < 3:
         print("Uso: python script.py <arquivo_entrada> <arquivo_saida>")
         return
 
+    # paths arquivo entrada e saída
     entrada_path = FileStream(sys.argv[1], encoding="utf-8")
     saida_path = sys.argv[2]
 
+    # abrindo arquivo de saída para escrever nele
     with open(saida_path, mode='w') as saida:
+
         lexer = lexical(entrada_path)
+
         lexer.removeErrorListeners()
 
         listener = CustomErrorListener(saida)
@@ -45,6 +67,7 @@ def main():
         while True:
             token = lexer.nextToken()
 
+            # Se atingir o final do arquio (EOF), para o loop
             if token.type == Token.EOF or listener.error_found:
                 break
 
