@@ -1,5 +1,11 @@
 lexer grammar lexical;
 
+TEXTO : '"' (~[\r\n])*? '"';
+//COMENTARIO_NAO_FECHADO : '{' ~('}' | '\n')* '\n';
+
+WS : [ \t\r\n]+ -> skip;
+COMENTARIO: '{' (~[\r\n])*? '}' -> skip;
+
 // terminais literais
 ALGORITMO : 'algoritmo';
 FIM_ALGORITMO: 'fim_algoritmo';
@@ -54,17 +60,10 @@ FECHA_VETOR: ']';
 
 IDENT: ('a'..'z' | 'A'..'Z')('a'..'z' | 'A'..'Z' | '0'..'9')*;
 
-VIRG: ',';
+VIRG: ',';  
 
 fragment
 DIGITO: '0'..'9';
 
 NUM_INT: ('+'|'-')? DIGITO+;
 NUM_REAL: ('+'|'-')? DIGITO+ '.' DIGITO+;
-
-WS        : [ \t\r\n]+ -> skip;
-COMENTARIO: '{' .*? '}' -> skip;
-
-fragment ESC_SEQ : '\\' ["\\nrt]; 
-TEXTO : '"' ( ESC_SEQ | ~["\\\r\n] )* '"';
-
