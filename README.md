@@ -62,6 +62,17 @@ O analisador reconhece:
    python main.py <arquivo_de_entrada> <arquivo_de_saida>
    ```
 
+## Geração de Analisador
+
+Para regenerar o analisador a partir da gramática:
+
+1. Tenha o ANTLR4 instalado (disponível no arquivo `antlr-4.13.2-complete.jar`)
+2. Execute:
+   ```
+   java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
+   ```
+
+
 ## Exemplo de Uso
 
 Arquivo de entrada (`entrada.txt`):
@@ -143,14 +154,3 @@ Saída produzida:
 <'nome',IDENT>
 Linha 3: ~ - simbolo nao identificado
 ```
-
-## Geração de Analisador
-
-Para regenerar o analisador a partir da gramática:
-
-1. Tenha o ANTLR4 instalado (disponível no arquivo `antlr-4.13.2-complete.jar`)
-2. Execute:
-   ```
-   java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
-   ```
-
