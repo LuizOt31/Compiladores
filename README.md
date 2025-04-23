@@ -59,7 +59,7 @@ O analisador reconhece:
    ```
 3. Execute o programa passando o arquivo de entrada e o arquivo de saída:
    ```
-   python main.py <arquivo_de_entrada> <arquivo_de_saida>
+   python3 main.py <arquivo_de_entrada> <arquivo_de_saida>
    ```
 
 ## Geração de Analisador
