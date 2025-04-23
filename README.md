@@ -92,7 +92,7 @@ Para executar o analisador léxico, após seguir os pré-requisitos acima, use o
 python3 main.py <arquivo_de_entrada> <arquivo_de_saida>
 ```
 
-## Geração de Analisador
+## Geração do Analisador
 
 Para regenerar o analisador a partir da gramática:
 
