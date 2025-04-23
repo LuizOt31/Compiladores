@@ -47,20 +47,50 @@ O analisador reconhece:
 - Comentários: texto entre chaves `{}`
 - Cadeias de caracteres: texto entre aspas duplas
 
-## Como Executar
+## Pré-requisitos e Ordem de Execução
 
-1. Certifique-se de ter o Python 3 instalado
+1. Certifique-se de ter o Java instalado para executar o ANTLR4
+
+   ```
+   java --version
+   ```
+
+2. Certifique-se de ter o Python 3 instalado
+
    ```
    python3 --version
    ```
-2. Instale o pacote antlr4-python3-runtime:
+
+3. Instale o pacote antlr4-python3-runtime:
+
    ```
    pip install antlr4-python3-runtime
    ```
-3. Execute o programa passando o arquivo de entrada e o arquivo de saída:
+
+4. Gere o analisador léxico:
+
+   ```
+   java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
+   ```
+
+   Este comando irá gerar os arquivos Python necessários para o analisador léxico.
+
+5. Agora você pode executar o programa principal:
    ```
    python3 main.py <arquivo_de_entrada> <arquivo_de_saida>
    ```
+   Obs: Os símbolos `<` e `>` são apenas ilustrativos, não devem ser incluídos no comando. Por exemplo:
+   ```
+   python3 main.py entrada.txt saida.txt
+   ```
+
+## Como Executar
+
+Para executar o analisador léxico, após seguir os pré-requisitos acima, use o comando:
+
+```
+python3 main.py <arquivo_de_entrada> <arquivo_de_saida>
+```
 
 ## Geração de Analisador
 
@@ -71,7 +101,6 @@ Para regenerar o analisador a partir da gramática:
    ```
    java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
    ```
-
 
 ## Exemplo de Uso
 
