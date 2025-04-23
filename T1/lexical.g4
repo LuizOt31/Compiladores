@@ -64,10 +64,10 @@ NUM_REAL : DIGITO+ '.' DIGITO+;    // sem sinal
 NUM_INT  : DIGITO+;                // sem sinal
 
 // Cadeia
-CADEIA          : '"' (~["\r\n])*? '"' ;
+CADEIA          : '"' (~[\r\n])*? '"';
 
 // Comentário (fechado corretamente)
-COMENTARIO      : '{' .*? '}' -> skip ;
+COMENTARIO      : '{' (~[\r\n])*? '}' -> skip;
 
 // Espaços e quebras de linha
-WS              : [ \t\r\n]+ -> skip ;
+WS              : [ \t\n\r]+ -> skip ;

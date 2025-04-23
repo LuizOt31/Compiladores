@@ -45,15 +45,16 @@ def main():
         while True:
             token = lexer.nextToken()
 
-            # Interrompe se houver erro ou fim do arquivo
-            if listener.error_found or token.type == Token.EOF:
+            if token.type == Token.EOF or listener.error_found:
                 break
 
-            tipo = lexer.symbolicNames[token.type]
-            if tipo in ['IDENT', 'CADEIA', 'NUM_INT', 'NUM_REAL']:
-                print(f"<'{token.text}',{tipo}>", file=saida)
-            else:
-                print(f"<'{token.text}','{token.text}'>", file=saida)
+            # Só processa tokens do canal principal
+            if token.channel == Token.DEFAULT_CHANNEL:
+                tipo = lexer.symbolicNames[token.type]
+                if tipo in ['IDENT', 'CADEIA', 'NUM_INT', 'NUM_REAL']:
+                    print(f"<'{token.text}',{tipo}>", file=saida)
+                else:
+                    print(f"<'{token.text}','{token.text}'>", file=saida)
 
 if __name__ == '__main__':
     main()
