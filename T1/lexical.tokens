@@ -52,7 +52,6 @@ NUM_INT=51
 CADEIA=52
 COMENTARIO=53
 WS=54
-ERRO=55
 'algoritmo'=1
 'fim_algoritmo'=2
 'declare'=3

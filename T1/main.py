@@ -1,32 +1,59 @@
 from antlr4 import *
 from lexical import lexical
+from antlr4.error.ErrorListener import ErrorListener
 import sys
+import re
+
+class CustomErrorListener(ErrorListener):
+    def __init__(self, output):
+        super().__init__()
+        self.output = output
+        self.error_found = False
+
+    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
+        self.error_found = True
+
+        # Comentário não fechado
+        if '{' in msg and ('EOF' in msg or '\\n' in msg or '\\r' in msg):
+            print(f"Linha {line}: comentario nao fechado", file=self.output)
+
+        # Cadeia literal não fechada
+        elif '"' in msg and ('EOF' in msg or '\\n' in msg or '\\r' in msg):
+            print(f"Linha {line}: cadeia literal nao fechada", file=self.output)
+
+        # Símbolo não identificado
+        else:
+            simbolo = re.search(r"'(.*?)'", msg)
+            texto = simbolo.group(1) if simbolo else offendingSymbol.text
+            print(f"Linha {line}: {texto} - simbolo nao identificado", file=self.output)
 
 def main():
     if len(sys.argv) < 3:
+        print("Uso: python script.py <arquivo_entrada> <arquivo_saida>")
         return
 
     entrada_path = FileStream(sys.argv[1], encoding="utf-8")
     saida_path = sys.argv[2]
 
-    lexer = lexical(entrada_path)
-    token = lexer.nextToken()
-
     with open(saida_path, mode='w') as saida:
-        while token.type != Token.EOF:
-            tipo = lexer.symbolicNames[token.type]
+        lexer = lexical(entrada_path)
+        lexer.removeErrorListeners()
 
-            if tipo == 'ERRO':
-                linha = token.line
-                caractere = token.text
-                saida.write(f"Linha {linha}: {caractere} - simbolo nao identificado\n")
-                break  # <-- Parar imediatamente após erro
-            elif tipo in ['IDENT', 'CADEIA', 'NUM_INT', 'NUM_REAL']:
-                saida.write(f"<'{token.text}',{tipo}>\n")
-            else:
-                saida.write(f"<'{token.text}','{token.text}'>\n")
+        listener = CustomErrorListener(saida)
+        lexer.addErrorListener(listener)
 
+        while True:
             token = lexer.nextToken()
+
+            # Interrompe se houver erro ou fim do arquivo
+            if listener.error_found or token.type == Token.EOF:
+                break
+
+            tipo = lexer.symbolicNames[token.type]
+            if tipo in ['IDENT', 'CADEIA', 'NUM_INT', 'NUM_REAL']:
+                print(f"<'{token.text}',{tipo}>", file=saida)
+            else:
+                print(f"<'{token.text}','{token.text}'>", file=saida)
 
 if __name__ == '__main__':
     main()
