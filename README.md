@@ -183,3 +183,28 @@ Saída produzida:
 <'nome',IDENT>
 Linha 3: ~ - simbolo nao identificado
 ```
+
+## Testes Automatizados
+
+O projeto inclui um conjunto de casos de teste automatizados para verificar o funcionamento correto do analisador léxico. Os testes estão localizados no diretório `testes/`.
+
+### Estrutura dos Testes
+
+- `testes/entrada/`: Contém os arquivos de entrada para teste
+- `testes/saida_esperada/`: Contém os arquivos com as saídas esperadas
+- `test.py`: Script Python que executa os testes automaticamente
+
+### Como Executar os Testes
+
+1. Certifique-se de que o analisador léxico foi gerado (passo 4 da seção Pré-requisitos)
+2. Execute o script de testes:
+   ```
+   python3 test.py
+   ```
+
+O script irá:
+
+1. Processar cada arquivo de entrada na pasta `testes/entrada/`
+2. Comparar a saída gerada com o arquivo esperado em `testes/saida_esperada/`
+3. Reportar quais testes passaram e quais falharam
+4. Mostrar um resumo final com o número total de testes e quantos foram bem-sucedidos
