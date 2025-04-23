@@ -49,25 +49,33 @@ O analisador reconhece:
 
 ## Pré-requisitos e Ordem de Execução
 
-1. Certifique-se de ter o Java instalado para executar o ANTLR4
+1. Entre na pasta T1:
+
+   ```
+   cd T1
+   ```
+
+2. Certifique-se de ter o Java 11 ou superior instalado para executar o ANTLR4:
 
    ```
    java --version
    ```
 
-2. Certifique-se de ter o Python 3 instalado
+   Obs: O ANTLR tool requer Java 11+, enquanto o runtime Java requer Java 8+.
+
+3. Certifique-se de ter o Python 3 instalado
 
    ```
    python3 --version
    ```
 
-3. Instale o pacote antlr4-python3-runtime:
+4. Instale o pacote antlr4-python3-runtime:
 
    ```
    pip install antlr4-python3-runtime
    ```
 
-4. Gere o analisador léxico:
+5. Gere o analisador léxico:
 
    ```
    java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 lexical.g4
@@ -75,7 +83,7 @@ O analisador reconhece:
 
    Este comando irá gerar os arquivos Python necessários para o analisador léxico.
 
-5. Agora você pode executar o programa principal:
+6. Agora você pode executar o programa principal:
    ```
    python3 main.py <arquivo_de_entrada> <arquivo_de_saida>
    ```
