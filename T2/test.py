@@ -108,7 +108,7 @@ if __name__ == "__main__":
             print(f"⚠️ ERRO: Diretório de saída esperada '{expected_output_dir}' não encontrado.")
             sys.exit(1)
     else:
-        print("Uso: python test.py [dir_entrada] [dir_saida_esperada] [dir_saida_gerada]")
+        print("Uso: python3 test.py [dir_entrada] [dir_saida_esperada] [dir_saida_gerada]")
         sys.exit(1)
     
     print(f"🔍 Testando analisador sintático para a linguagem LA")

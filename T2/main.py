@@ -103,7 +103,7 @@ def main(input_file, output_file):
 if __name__ == '__main__':
     # Verifica se o número correto de argumentos foi fornecido
     if len(sys.argv) != 3:
-        print("Uso: python main.py <arquivo_entrada> <arquivo_saida>")
+        print("Uso: python3 main.py <arquivo_entrada> <arquivo_saida>")
         sys.exit(1)
     
     input_file = sys.argv[1]

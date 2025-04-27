@@ -47,7 +47,7 @@ def main():
     '''
 
     if len(sys.argv) < 3:
-        print("Uso: python script.py <arquivo_entrada> <arquivo_saida>")
+        print("Uso: python3 script.py <arquivo_entrada> <arquivo_saida>")
         return
 
     # paths arquivo entrada e saída
