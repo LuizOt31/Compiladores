@@ -23,27 +23,46 @@ Este é o segundo trabalho da disciplina de Compiladores, que consiste na implem
 
 Para compilar o projeto, siga os passos abaixo:
 
-1. Instale a biblioteca antlr4-python3-runtime:
+1. Entre na pasta T2:
 
-```bash
-pip install antlr4-python3-runtime
-```
+   ```
+   cd T2
+   ```
 
-2. Gere o lexer e o parser a partir da gramática:
+2. Certifique-se de ter o Java 11 ou superior instalado para executar o ANTLR4:
 
-```bash
-cd T2
-java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 LA.g4
-```
+   ```
+   java --version
+   ```
 
-Este comando irá gerar os arquivos LALexer.py e LAParser.py, entre outros.
+   Obs: O ANTLR tool requer Java 11+, enquanto o runtime Java requer Java 8+.
+
+3. Certifique-se de ter o Python 3 instalado
+
+   ```
+   python3 --version
+   ```
+
+4. Instale o pacote antlr4-python3-runtime:
+
+   ```
+   pip install antlr4-python3-runtime
+   ```
+
+5. Gere o analisador léxico e sintático:
+
+   ```
+   java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 LA.g4
+   ```
+
+   Este comando irá gerar os arquivos Python necessários para o analisador léxico e sintático, incluindo LALexer.py e LAParser.py, entre outros.
 
 ## Execução
 
 Para executar o analisador sintático:
 
 ```bash
-python main.py <arquivo_entrada> <arquivo_saida>
+python3 main.py <arquivo_entrada> <arquivo_saida>
 ```
 
 Onde:
@@ -58,7 +77,7 @@ O projeto inclui um sistema de testes automatizados que verifica se o analisador
 Para executar os testes:
 
 ```bash
-python test.py
+python3 test.py
 ```
 
 Por padrão, o script de teste usará:
@@ -70,7 +89,7 @@ Por padrão, o script de teste usará:
 Você também pode especificar diretórios personalizados:
 
 ```bash
-python test.py <dir_entrada> <dir_saida_esperada> <dir_saida_gerada>
+python3 test.py <dir_entrada> <dir_saida_esperada> <dir_saida_gerada>
 ```
 
 O script executa o analisador sintático em cada arquivo de entrada e compara a saída gerada com a saída esperada, fornecendo estatísticas e detalhes sobre os testes que passaram ou falharam.
@@ -104,6 +123,3 @@ Linha X: erro sintatico proximo a Y
 Fim da compilacao
 ```
 
-## Membros do Grupo
-
-[Lista de membros do grupo]
