@@ -38,13 +38,6 @@ java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 LA.g4
 
 Este comando irá gerar os arquivos LALexer.py e LAParser.py, entre outros.
 
-Alternativamente, você pode usar o script de compilação fornecido:
-
-```bash
-cd T2
-./compile.sh
-```
-
 ## Execução
 
 Para executar o analisador sintático:
