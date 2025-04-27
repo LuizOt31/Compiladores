@@ -52,8 +52,8 @@ def run_test(entrada_file, saida_esperada_file):
 
 def main():
     # Diretórios dos arquivos de teste
-    entrada_dir = "./testes/entrada"
-    saida_esperada_dir = "./testes/saida_esperada"
+    entrada_dir = "./casos-de-teste/entrada"
+    saida_esperada_dir = "./casos-de-teste/saida_esperada"
     
     # Verificar se os diretórios existem
     if not os.path.exists(entrada_dir):
