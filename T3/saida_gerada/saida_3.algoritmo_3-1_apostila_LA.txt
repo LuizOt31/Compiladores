@@ -1,0 +1,5 @@
+Linha 6: identificador troco ja declarado anteriormente
+Linha 12: atribuicao nao compativel para porcentagemGarcom
+Linha 13: atribuicao nao compativel para troco
+Linha 17: identificador totalAlimento nao declarado
+Fim da compilacao
