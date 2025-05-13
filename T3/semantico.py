@@ -2,7 +2,6 @@
 from LAParser import LAParser
 from LAVisitor import LAVisitor
 from scope import Escopo, SymbolAlreadyDefinedException
-from utils import flatten_list, is_coercible
 
 class Alguma(LAVisitor):
     """
@@ -14,7 +13,7 @@ class Alguma(LAVisitor):
         self.scope = Escopo()
         self.validTypes = ["inteiro", "literal", "real", "logico"]
 
-    def visitPrograma(self, ctx: LAParser.ProgramaContext) -> str:
+    def visitPrograma(self, ctx: LAParser.ProgramaContext):
         super().visitPrograma(ctx)
         return self.__printErrors()
 
@@ -63,7 +62,7 @@ class Alguma(LAVisitor):
         tipo_identificador = self.__getIdentificadorType(
             ctx.identificador()
         )  # Tipo do identificador alvo
-        tipo_expressao = flatten_list(
+        tipo_expressao = self.__flatten_list(
             self.__getExpressaoType(ctx.expressao())
         )  # Tipo da expressão
 
@@ -103,7 +102,7 @@ class Alguma(LAVisitor):
         return types
 
     def __getTermoType(self, ctx: LAParser.TermoContext):
-        types = flatten_list([self.__getFatorType(fator) for fator in ctx.fator()])
+        types = self.__flatten_list([self.__getFatorType(fator) for fator in ctx.fator()])
 
         # Coerce integers to real numbers on multiplication and division
         if len(ctx.op2()) > 0 and all(type in ["real", "inteiro"] for type in types):
@@ -170,11 +169,27 @@ class Alguma(LAVisitor):
     def __checkAttributionType(
         self, identifier, identifier_type, expression_types, line
     ):
-        if not all(is_coercible(identifier_type, type) for type in expression_types):
+        if not all(self.__is_coercible(identifier_type, type) for type in expression_types):
             self.errors.append(
                 f"Linha {line}: atribuicao nao compativel para {identifier}"
             )
 
+    def __is_coercible(self, type_a, type_b):
+        if type_a == "real" and type_b == "inteiro":
+            return True
+
+        return type_a == type_b
+
+    def __flatten_list(self, nested_list):
+        flattened = []
+
+        for item in nested_list:
+            if isinstance(item, list):
+                flattened.extend(self.__flatten_list(item))
+            else:
+                flattened.append(item)
+
+        return flattened
 
 
 
