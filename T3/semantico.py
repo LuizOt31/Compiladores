@@ -91,7 +91,6 @@ class SemanticAnalyzer(LAVisitor):
 
         tipo_destino = simbolo.type
         tipo_expressao = self.visit(ctx.expressao())
-
         if not self.is_compatible(tipo_destino, tipo_expressao):
             self.errors.append(f"Linha {linha}: atribuicao nao compativel para {ident}")
         return None
