@@ -1,9 +1,8 @@
 
 from LAParser import LAParser
 from LAVisitor import LAVisitor
-from scope import Scope, SymbolAlreadyDefinedException
+from scope import Escopo, SymbolAlreadyDefinedException
 from utils import flatten_list, is_coercible
-
 
 class Alguma(LAVisitor):
     """
@@ -12,7 +11,7 @@ class Alguma(LAVisitor):
 
     def __init__(self):
         self.errors = []
-        self.scope = Scope()
+        self.scope = Escopo()
         self.validTypes = ["inteiro", "literal", "real", "logico"]
 
     def visitPrograma(self, ctx: LAParser.ProgramaContext) -> str:
@@ -20,7 +19,7 @@ class Alguma(LAVisitor):
         return self.__printErrors()
 
     def visitCorpo(self, ctx: LAParser.CorpoContext):
-        self.scope.newScope()
+        self.scope.criar_novo_escopo()
         return super().visitCorpo(ctx)
 
     def visitDeclaracao_local(self, ctx: LAParser.Declaracao_localContext):
@@ -37,7 +36,7 @@ class Alguma(LAVisitor):
             line = identifier.start.line
 
             try:
-                self.scope.add(key, type)
+                self.scope.adicionar_simbolo(key, type)
 
             except SymbolAlreadyDefinedException:
                 self.errors.append(
@@ -149,10 +148,7 @@ class Alguma(LAVisitor):
     def __getIdentificadorType(self, ctx: LAParser.IdentificadorContext):
         identificador = str(ctx.IDENT()[0])
 
-        symbol = self.scope.find(identificador)
-
-        if symbol:
-            return symbol.type
+        return self.scope.buscar_simbolo(identificador)
 
     def __checkType(self, type: str, line) -> bool:
         if type not in self.validTypes:
@@ -166,7 +162,7 @@ class Alguma(LAVisitor):
 
     def __checkDeclaredIdentifier(self, identifier, line):
         text = identifier.getText()
-        symbol = self.scope.find(text)
+        symbol = self.scope.buscar_simbolo(text)
 
         if not symbol:
             self.errors.append(f"Linha {line}: identificador {text} nao declarado")

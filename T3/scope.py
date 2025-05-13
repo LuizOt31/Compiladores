@@ -1,60 +1,39 @@
-
-
 class SymbolAlreadyDefinedException(Exception):
     "Símbolo já definido no escopo"
     pass
 
-
-class Symbol:
-    def __init__(self, type, value):
+class Variavel:
+    def __init__(self, type, value, name):
         self.type = type
         self.value = value
-
-    def setType(self, type):
-        self.type = type
-
-    def setValue(self, value):
-        self.value = value
-
-    def __repr__(self) -> str:
-        return f"Symbol(type={self.type}, value={self.value})"
+        self.name = name
 
 
-class Scope:
+class Escopo:
     def __init__(self):
-        self.stack = []
+        self.escopos = []
 
-    def newScope(self):
-        self.stack.append({})
+    def criar_novo_escopo(self):
+        self.escopos.append([])
 
-    def peek(self):
-        return self.stack[-1]
+    def escopo_atual(self):
+        return self.escopos[-1]
 
-    def leaveScope(self):
-        self.stack.pop()
+    def sair_escopo(self):
+        self.escopos.pop()
 
-    def add(self, key: str, type: str) -> None:
-        current_scope = self.stack[-1]
+    def adicionar_simbolo(self, nome, tipo):
+        escopo_corrente = self.escopo_atual()
 
-        if key in current_scope:
-            raise SymbolAlreadyDefinedException
-        else:
-            current_scope[key] = Symbol(type, None)
+        for var in escopo_corrente:
+            if nome == var.name:
+                raise SymbolAlreadyDefinedException()
+                        
+        escopo_corrente.append(Variavel(tipo, None, nome))
 
-    def set(self, key: str, value) -> None:
-        current_scope = self.stack[-1]
-
-        if current_scope[key]:
-            raise SymbolAlreadyDefinedException
-        else:
-            current_scope[key].setValue(value)
-
-    def find(self, key: str) -> Symbol | None:
-        for scope in self.stack:
-            if key in scope:
-                symbol = scope[key]
-
-                if symbol:
-                    return symbol
-
+    def buscar_simbolo(self, nome):
+        for escopo in self.escopos:
+            for var in escopo:
+                if nome == var.name:
+                    return var.type
         return None
