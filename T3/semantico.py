@@ -3,9 +3,9 @@ from LAParser import LAParser
 from LAVisitor import LAVisitor
 from scope import Escopo, SymbolAlreadyDefinedException
 
-class Alguma(LAVisitor):
+class semantico(LAVisitor):
     """
-    Classe responsável por visitar e analisar a estrutura de um programa na linguagem 'Alguma'.
+    Responsável por fazer a análise semântica da LA
     """
 
     def __init__(self):
