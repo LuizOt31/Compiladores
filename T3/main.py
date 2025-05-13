@@ -73,8 +73,8 @@ def main(input_file, output_file):
                 return
 
             # Se chegou até aqui, executa a análise semântica
-            from semantico import SemanticAnalyzer
-            analyzer = SemanticAnalyzer()
+            from semantico import Alguma
+            analyzer = Alguma()
             analyzer.visit(tree)
 
             if analyzer.errors:

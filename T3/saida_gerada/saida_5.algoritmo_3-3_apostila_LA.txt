@@ -1,4 +1,2 @@
 Linha 7: identificador lado1 ja declarado anteriormente
-Linha 20: atribuicao nao compativel para ehIsosceles
-Linha 23: atribuicao nao compativel para ehEscaleno
 Fim da compilacao

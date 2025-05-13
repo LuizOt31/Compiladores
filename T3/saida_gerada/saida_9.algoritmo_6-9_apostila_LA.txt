@@ -1,8 +1,3 @@
-Linha 10: atribuicao nao compativel para numeroItens
 Linha 11: atribuicao nao compativel para valorTotal
-Linha 12: atribuicao nao compativel para somaUnitarios
 Linha 16: identificador preco_final nao declarado
-Linha 18: atribuicao nao compativel para numeroItens
-Linha 19: atribuicao nao compativel para valorTotal
-Linha 20: atribuicao nao compativel para somaUnitarios
 Fim da compilacao
