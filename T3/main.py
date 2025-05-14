@@ -4,7 +4,7 @@ from antlr4 import *
 from LALexer import LALexer
 from LAParser import LAParser
 from antlr4.error.ErrorListener import ErrorListener
-from semantico import semantico
+from semantico import AnalisadorSemantico
 
 
 class CustomErrorListener(ErrorListener):
@@ -75,7 +75,7 @@ def main(input_file, output_file):
                 return
 
             # Se chegou até aqui, executa a análise semântica
-            analyzer = semantico()
+            analyzer = AnalisadorSemantico()
             analyzer.visit(tree)
 
             if analyzer.errors:

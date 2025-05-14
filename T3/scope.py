@@ -1,5 +1,5 @@
-class SymbolAlreadyDefinedException(Exception):
-    "Símbolo já definido no escopo"
+# Erro para simbolo já definido dentro do escopo
+class Except_Symbol(Exception):
     pass
 
 class Variavel:
@@ -27,7 +27,7 @@ class Escopo:
 
         for var in escopo_corrente:
             if nome == var.name:
-                raise SymbolAlreadyDefinedException()
+                raise Except_Symbol()
                         
         escopo_corrente.append(Variavel(tipo, None, nome))
 

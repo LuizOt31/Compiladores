@@ -1,195 +1,158 @@
-
 from LAParser import LAParser
 from LAVisitor import LAVisitor
-from scope import Escopo, SymbolAlreadyDefinedException
+from scope import Escopo, Except_Symbol
 
-class semantico(LAVisitor):
+class AnalisadorSemantico(LAVisitor):
     """
-    Responsável por fazer a análise semântica da LA
+    Realiza a análise semântica do código-fonte na linguagem LA.
+    Verifica declarações, tipos e atribuições incorretas.
     """
 
     def __init__(self):
         self.errors = []
-        self.scope = Escopo()
-        self.validTypes = ["inteiro", "literal", "real", "logico"]
+        self.escopo = Escopo()
+        self.tipos_validos = ["inteiro", "literal", "real", "logico"]
 
     def visitPrograma(self, ctx: LAParser.ProgramaContext):
         super().visitPrograma(ctx)
-        return self.__printErrors()
+        return self.imprimir_erros()
 
     def visitCorpo(self, ctx: LAParser.CorpoContext):
-        self.scope.criar_novo_escopo()
+        self.escopo.criar_novo_escopo()
         return super().visitCorpo(ctx)
 
     def visitDeclaracao_local(self, ctx: LAParser.Declaracao_localContext):
         return super().visitDeclaracao_local(ctx)
 
     def visitVariavel(self, ctx: LAParser.VariavelContext):
-        type = ctx.tipo().getText()
-        line = ctx.start.line
+        tipo = ctx.tipo().getText()
+        linha = ctx.start.line
 
-        self.__checkType(type, line)
+        self.verificar_tipo(tipo, linha)
 
-        for identifier in ctx.identificador():
-            key = identifier.getText()
-            line = identifier.start.line
+        for identificador in ctx.identificador():
+            nome_id = identificador.getText()
+            linha = identificador.start.line
 
             try:
-                self.scope.adicionar_simbolo(key, type)
-
-            except SymbolAlreadyDefinedException:
+                self.escopo.adicionar_simbolo(nome_id, tipo)
+            except Except_Symbol:
                 self.errors.append(
-                    f"Linha {line}: identificador {key} ja declarado anteriormente"
+                    f"Linha {linha}: identificador {nome_id} ja declarado anteriormente"
                 )
 
     def visitCmdLeia(self, ctx: LAParser.CmdLeiaContext):
-        for identifier in ctx.identificador():
-            line = identifier.start.line
-            self.__checkDeclaredIdentifier(identifier, line)
+        for identificador in ctx.identificador():
+            linha = identificador.start.line
+            self.verificar_identificador_declarado(identificador, linha)
 
     def visitCmdEscreva(self, ctx: LAParser.CmdEscrevaContext):
         for expressao in ctx.expressao():
-            self.__getExpressaoType(expressao)
-
+            self.obter_tipo_expressao(expressao)
         super().visitCmdEscreva(ctx)
 
     def visitCmdEnquanto(self, ctx: LAParser.CmdEnquantoContext):
-        self.__getExpressaoType(ctx.expressao())
+        self.obter_tipo_expressao(ctx.expressao())
         super().visitCmdEnquanto(ctx)
 
     def visitCmdAtribuicao(self, ctx: LAParser.CmdAtribuicaoContext):
-        identificador = ctx.identificador().getText()
-        tipo_identificador = self.__getIdentificadorType(
-            ctx.identificador()
-        )  # Tipo do identificador alvo
-        tipo_expressao = self.__flatten_list(
-            self.__getExpressaoType(ctx.expressao())
-        )  # Tipo da expressão
+        nome_id = ctx.identificador().getText()
+        tipo_id = self.obter_tipo_identificador(ctx.identificador())
+        tipo_expressao = self.achatado(self.obter_tipo_expressao(ctx.expressao()))
 
-        self.__checkAttributionType(
-            identificador, tipo_identificador, tipo_expressao, ctx.start.line
-        )
+        self.verificar_atribuicao(nome_id, tipo_id, tipo_expressao, ctx.start.line)
         return super().visitCmdAtribuicao(ctx)
 
-    def __getExpressaoType(self, ctx: LAParser.ExpressaoContext):
-        types = []
-
+    def obter_tipo_expressao(self, ctx: LAParser.ExpressaoContext):
+        tipos = []
         for termo_logico in ctx.termo_logico():
             for fator_logico in termo_logico.fator_logico():
-                types.append(self.__getFator_logicoType(fator_logico))
+                tipos.append(self.obter_tipo_fator_logico(fator_logico))
+        return tipos
 
-        return types
+    def obter_tipo_fator_logico(self, ctx: LAParser.Fator_logicoContext):
+        return self.obter_tipo_parcela_logica(ctx.parcela_logica())
 
-    def __getFator_logicoType(self, ctx: LAParser.Fator_logicoContext):
-        return self.__getParcela_logicaType(ctx.parcela_logica())
-
-    def __getParcela_logicaType(self, ctx: LAParser.Parcela_logicaContext):
+    def obter_tipo_parcela_logica(self, ctx: LAParser.Parcela_logicaContext):
         if ctx.exp_relacional():
-            return self.__getExp_relacionalType(ctx.exp_relacional())
+            return self.obter_tipo_expressao_relacional(ctx.exp_relacional())
 
-    def __getExp_relacionalType(self, ctx: LAParser.Exp_relacionalContext):
-        types = [self.__getExp_aritmeticaType(exp) for exp in ctx.exp_aritmetica()]
-
-        # If there are more than one expression, then it is a logical expression,
-        # which always has the type "logico"
-        if len(types) > 1:
+    def obter_tipo_expressao_relacional(self, ctx: LAParser.Exp_relacionalContext):
+        tipos = [self.obter_tipo_expressao_aritmetica(exp) for exp in ctx.exp_aritmetica()]
+        if len(tipos) > 1:
             return "logico"
+        return tipos
 
-        return types
+    def obter_tipo_expressao_aritmetica(self, ctx: LAParser.Exp_aritmeticaContext):
+        return [self.obter_tipo_termo(termo) for termo in ctx.termo()]
 
-    def __getExp_aritmeticaType(self, ctx: LAParser.Exp_aritmeticaContext):
-        types = [self.__getTermoType(termo) for termo in ctx.termo()]
-        return types
-
-    def __getTermoType(self, ctx: LAParser.TermoContext):
-        types = self.__flatten_list([self.__getFatorType(fator) for fator in ctx.fator()])
-
-        # Coerce integers to real numbers on multiplication and division
-        if len(ctx.op2()) > 0 and all(type in ["real", "inteiro"] for type in types):
+    def obter_tipo_termo(self, ctx: LAParser.TermoContext):
+        tipos = self.achatado([self.obter_tipo_fator(fator) for fator in ctx.fator()])
+        if len(ctx.op2()) > 0 and all(t in ["real", "inteiro"] for t in tipos):
             return "real"
+        return tipos
 
-        return types
+    def obter_tipo_fator(self, ctx: LAParser.FatorContext):
+        return [self.obter_tipo_parcela(parcela) for parcela in ctx.parcela()]
 
-    def __getFatorType(self, ctx: LAParser.FatorContext):
-        types = [self.__getParcelaType(parcela) for parcela in ctx.parcela()]
-        return types
-
-    def __getParcelaType(self, ctx: LAParser.ParcelaContext):
+    def obter_tipo_parcela(self, ctx: LAParser.ParcelaContext):
         if ctx.parcela_unario():
-            return self.__getParcela_unarioType(ctx.parcela_unario())
-
+            return self.obter_tipo_parcela_unaria(ctx.parcela_unario())
         if ctx.parcela_nao_unario():
-            return self.__getParcela_nao_unarioType(ctx.parcela_nao_unario())
+            return self.obter_tipo_parcela_nao_unaria(ctx.parcela_nao_unario())
 
-    def __getParcela_unarioType(self, ctx: LAParser.Parcela_unarioContext):
-        identifier = ctx.identificador()
-
-        if identifier:
-            line = identifier.start.line
-            self.__checkDeclaredIdentifier(identifier, line)
-            return self.__getIdentificadorType(identifier)
+    def obter_tipo_parcela_unaria(self, ctx: LAParser.Parcela_unarioContext):
+        identificador = ctx.identificador()
+        if identificador:
+            linha = identificador.start.line
+            self.verificar_identificador_declarado(identificador, linha)
+            return self.obter_tipo_identificador(identificador)
 
         if ctx.NUM_INT():
             return "inteiro"
-
         if ctx.NUM_REAL():
             return "real"
-
         if ctx.expressao():
-            return self.__getExpressaoType(ctx.expressao()[0])
+            return self.obter_tipo_expressao(ctx.expressao()[0])
 
-    def __getParcela_nao_unarioType(
-        self, ctx: LAParser.Parcela_nao_unarioContext
-    ):
+    def obter_tipo_parcela_nao_unaria(self, ctx: LAParser.Parcela_nao_unarioContext):
         if ctx.CADEIA():
             return ["literal"]
 
-    def __getIdentificadorType(self, ctx: LAParser.IdentificadorContext):
-        identificador = str(ctx.IDENT()[0])
+    def obter_tipo_identificador(self, ctx: LAParser.IdentificadorContext):
+        nome = str(ctx.IDENT()[0])
+        return self.escopo.buscar_simbolo(nome)
 
-        return self.scope.buscar_simbolo(identificador)
+    def verificar_tipo(self, tipo: str, linha):
+        if tipo not in self.tipos_validos:
+            self.errors.append(f"Linha {linha}: tipo {tipo} nao declarado")
 
-    def __checkType(self, type: str, line) -> bool:
-        if type not in self.validTypes:
-            self.errors.append(f"Linha {line}: tipo {type} nao declarado")
-            return False
+    def verificar_identificador_declarado(self, identificador, linha):
+        nome = identificador.getText()
+        if not self.escopo.buscar_simbolo(nome):
+            self.errors.append(f"Linha {linha}: identificador {nome} nao declarado")
 
-        return True
+    def verificar_atribuicao(self, nome, tipo_id, tipos_expr, linha):
+        if not all(self.aux(tipo_id, tipo) for tipo in tipos_expr):
+            self.errors.append(f"Linha {linha}: atribuicao nao compativel para {nome}")
 
-    def __printErrors(self) -> str:
+    def aux(self, tipo_a, tipo_b):
+        if tipo_a == "real" and tipo_b == "inteiro":
+            return True
+        return tipo_a == tipo_b
+
+    def achatado(self, lista_aninhada):
+        resultado = []
+        for item in lista_aninhada:
+            if isinstance(item, list):
+                resultado.extend(self.achatado(item))
+            else:
+                resultado.append(item)
+        return resultado
+
+    def imprimir_erros(self):
         return "\n".join(self.errors)
 
-    def __checkDeclaredIdentifier(self, identifier, line):
-        text = identifier.getText()
-        symbol = self.scope.buscar_simbolo(text)
-
-        if not symbol:
-            self.errors.append(f"Linha {line}: identificador {text} nao declarado")
-
-    def __checkAttributionType(
-        self, identifier, identifier_type, expression_types, line
-    ):
-        if not all(self.__is_coercible(identifier_type, type) for type in expression_types):
-            self.errors.append(
-                f"Linha {line}: atribuicao nao compativel para {identifier}"
-            )
-
-    def __is_coercible(self, type_a, type_b):
-        if type_a == "real" and type_b == "inteiro":
-            return True
-
-        return type_a == type_b
-
-    def __flatten_list(self, nested_list):
-        flattened = []
-
-        for item in nested_list:
-            if isinstance(item, list):
-                flattened.extend(self.__flatten_list(item))
-            else:
-                flattened.append(item)
-
-        return flattened
 
 
 
@@ -230,193 +193,194 @@ class semantico(LAVisitor):
 
 
 
-
-
-# from LAVisitor import LAVisitor
 # from LAParser import LAParser
-# from antlr4 import *
-# from collections import defaultdict
+# from LAVisitor import LAVisitor
+# from scope import Escopo, SymbolAlreadyDefinedException
 
-# class Symbol:
-#     def __init__(self, name, type_, category):
-#         self.name = name
-#         self.type = type_
-#         self.category = category  # var, const, func, proc, tipo
+# class semantico(LAVisitor):
+#     """
+#     Responsável por fazer a análise semântica da LA
+#     """
 
-# class SemanticAnalyzer(LAVisitor):
 #     def __init__(self):
 #         self.errors = []
-#         self.scopes = [dict()]  # pilha de escopos
-#         self.type_definitions = set(["literal", "inteiro", "real", "logico"])
-#         self.current_function = None
+#         self.scope = Escopo()
+#         self.validTypes = ["inteiro", "literal", "real", "logico"]
 
-#     def current_scope(self):
-#         return self.scopes[-1]
+#     def visitPrograma(self, ctx: LAParser.ProgramaContext):
+#         super().visitPrograma(ctx)
+#         return self.__printErrors()
 
-#     def enter_scope(self):
-#         self.scopes.append(dict())
-
-#     def exit_scope(self):
-#         self.scopes.pop()
-
-#     def declare(self, symbol: Symbol, line):
-#         scope = self.current_scope()
-#         if symbol.name in scope:
-#             self.errors.append(f"Linha {line}: identificador {symbol.name} ja declarado anteriormente")
-#         else:
-#             scope[symbol.name] = symbol
-
-#     def resolve(self, name):
-#         for scope in reversed(self.scopes):
-#             if name in scope:
-#                 return scope[name]
-#         return None
+#     def visitCorpo(self, ctx: LAParser.CorpoContext):
+#         self.scope.criar_novo_escopo()
+#         return super().visitCorpo(ctx)
 
 #     def visitDeclaracao_local(self, ctx: LAParser.Declaracao_localContext):
-#         if ctx.getChild(0).getText() == "declare":
-#             tipo = ctx.variavel().tipo().getText()
-#             if tipo not in self.type_definitions:
-#                 self.errors.append(f"Linha {ctx.start.line}: tipo {tipo} nao declarado")
-#             for identificador in ctx.variavel().identificador():
-#                 for ident_token in identificador.IDENT():
-#                     nome = ident_token.getText()
-#                     self.declare(Symbol(nome, tipo, "var"), ident_token.symbol.line)
-#         elif ctx.getChild(0).getText() == "constante":
-#             tipo = ctx.tipo_basico().getText()
-#             nome = ctx.IDENT().getText()
-#             self.declare(Symbol(nome, tipo, "const"), ctx.start.line)
-#         elif ctx.getChild(0).getText() == "tipo":
-#             nome = ctx.IDENT().getText()
-#             self.type_definitions.add(nome)
-#             self.declare(Symbol(nome, "tipo", "tipo"), ctx.start.line)
-#         return self.visitChildren(ctx)
+#         return super().visitDeclaracao_local(ctx)
 
-#     def visitDeclaracao_global(self, ctx: LAParser.Declaracao_globalContext):
-#         is_func = ctx.getChild(0).getText() == "funcao"
-#         nome = ctx.IDENT().getText()
-#         tipo = ctx.tipo_estendido().getText() if is_func else "procedimento"
-#         categoria = "func" if is_func else "proc"
+#     def visitVariavel(self, ctx: LAParser.VariavelContext):
+#         type = ctx.tipo().getText()
+#         line = ctx.start.line
 
-#         self.declare(Symbol(nome, tipo, categoria), ctx.start.line)
-#         self.enter_scope()
+#         self.__checkType(type, line)
 
-#         if ctx.parametros():
-#             self.visit(ctx.parametros())
+#         for identifier in ctx.identificador():
+#             key = identifier.getText()
+#             line = identifier.start.line
 
-#         if ctx.declaracao_local():
-#             for decl in ctx.declaracao_local():
-#                 self.visit(decl)
+#             try:
+#                 self.scope.adicionar_simbolo(key, type)
 
-#         if ctx.cmd():
-#             for c in ctx.cmd():
-#                 self.visit(c)
+#             except SymbolAlreadyDefinedException:
+#                 self.errors.append(
+#                     f"Linha {line}: identificador {key} ja declarado anteriormente"
+#                 )
 
-#         self.exit_scope()
-#         return None
-
-#     def visitCmdAtribuicao(self, ctx: LAParser.CmdAtribuicaoContext):
-#         ident = ctx.identificador().IDENT(0).getText()
-#         linha = ctx.start.line
-#         simbolo = self.resolve(ident)
-
-#         if not simbolo:
-#             self.errors.append(f"Linha {linha}: identificador {ident} nao declarado")
-#             return None
-
-#         tipo_destino = simbolo.type
-#         tipo_expressao = self.visit(ctx.expressao())
-#         if not self.is_compatible(tipo_destino, tipo_expressao):
-#             self.errors.append(f"Linha {linha}: atribuicao nao compativel para {ident}")
-#         return None
+#     def visitCmdLeia(self, ctx: LAParser.CmdLeiaContext):
+#         for identifier in ctx.identificador():
+#             line = identifier.start.line
+#             self.__checkDeclaredIdentifier(identifier, line)
 
 #     def visitCmdEscreva(self, ctx: LAParser.CmdEscrevaContext):
 #         for expressao in ctx.expressao():
-#             self.visit(expressao)
-#         return None
+#             self.__getExpressaoType(expressao)
 
-#     def visitIdentificador(self, ctx: LAParser.IdentificadorContext):
-#         nome = ctx.IDENT(0).getText()
-#         simbolo = self.resolve(nome)
-#         if simbolo:
-#             return simbolo.type
-#         else:
-#             self.errors.append(f"Linha {ctx.IDENT(0).symbol.line}: identificador {nome} nao declarado")
-#             return "tipo_indefinido"
+#         super().visitCmdEscreva(ctx)
 
-#     def visitExpressao(self, ctx: LAParser.ExpressaoContext):
-#         tipos = [self.visit(term) for term in ctx.termo_logico()]
-#         if any(t == "tipo_indefinido" for t in tipos):
-#             return "tipo_indefinido"
-#         if len(set(tipos)) == 1:
-#             return tipos[0]
-#         return "tipo_indefinido"
+#     def visitCmdEnquanto(self, ctx: LAParser.CmdEnquantoContext):
+#         self.__getExpressaoType(ctx.expressao())
+#         super().visitCmdEnquanto(ctx)
 
-#     def visitTermo_logico(self, ctx: LAParser.Termo_logicoContext):
-#         return self.visitChildren(ctx)
+#     def visitCmdAtribuicao(self, ctx: LAParser.CmdAtribuicaoContext):
+#         identificador = ctx.identificador().getText()
+#         tipo_identificador = self.__getIdentificadorType(
+#             ctx.identificador()
+#         )  # Tipo do identificador alvo
+#         tipo_expressao = self.__flatten_list(
+#             self.__getExpressaoType(ctx.expressao())
+#         )  # Tipo da expressão
 
-#     def visitFator_logico(self, ctx: LAParser.Fator_logicoContext):
-#         return self.visitChildren(ctx)
+#         self.__checkAttributionType(
+#             identificador, tipo_identificador, tipo_expressao, ctx.start.line
+#         )
+#         return super().visitCmdAtribuicao(ctx)
 
-#     def visitParcela_logica(self, ctx: LAParser.Parcela_logicaContext):
-#         if ctx.getText() in ["verdadeiro", "falso"]:
+#     def __getExpressaoType(self, ctx: LAParser.ExpressaoContext):
+#         types = []
+
+#         for termo_logico in ctx.termo_logico():
+#             for fator_logico in termo_logico.fator_logico():
+#                 types.append(self.__getFator_logicoType(fator_logico))
+
+#         return types
+
+#     def __getFator_logicoType(self, ctx: LAParser.Fator_logicoContext):
+#         return self.__getParcela_logicaType(ctx.parcela_logica())
+
+#     def __getParcela_logicaType(self, ctx: LAParser.Parcela_logicaContext):
+#         if ctx.exp_relacional():
+#             return self.__getExp_relacionalType(ctx.exp_relacional())
+
+#     def __getExp_relacionalType(self, ctx: LAParser.Exp_relacionalContext):
+#         types = [self.__getExp_aritmeticaType(exp) for exp in ctx.exp_aritmetica()]
+
+#         # If there are more than one expression, then it is a logical expression,
+#         # which always has the type "logico"
+#         if len(types) > 1:
 #             return "logico"
-#         return self.visit(ctx.exp_relacional())
 
-#     def visitExp_relacional(self, ctx: LAParser.Exp_relacionalContext):
-#         tipos = [self.visit(e) for e in ctx.exp_aritmetica()]
-#         if len(set(tipos)) == 1 and tipos[0] in ["inteiro", "real", "literal"]:
-#             return "logico"
-#         return "tipo_indefinido"
+#         return types
 
-#     def visitExp_aritmetica(self, ctx: LAParser.Exp_aritmeticaContext):
-#         tipos = [self.visit(term) for term in ctx.termo()]
-#         if all(t in ["inteiro", "real"] for t in tipos):
-#             return "real" if "real" in tipos else "inteiro"
-#         return "tipo_indefinido"
+#     def __getExp_aritmeticaType(self, ctx: LAParser.Exp_aritmeticaContext):
+#         types = [self.__getTermoType(termo) for termo in ctx.termo()]
+#         return types
 
-#     def visitTermo(self, ctx: LAParser.TermoContext):
-#         tipos = [self.visit(fator) for fator in ctx.fator()]
-#         if all(t in ["inteiro", "real"] for t in tipos):
-#             return "real" if "real" in tipos else "inteiro"
-#         return "tipo_indefinido"
+#     def __getTermoType(self, ctx: LAParser.TermoContext):
+#         types = self.__flatten_list([self.__getFatorType(fator) for fator in ctx.fator()])
 
-#     def visitFator(self, ctx: LAParser.FatorContext):
-#         tipos = [self.visit(parcela) for parcela in ctx.parcela()]
-#         if all(t in ["inteiro", "real"] for t in tipos):
-#             return "real" if "real" in tipos else "inteiro"
-#         return "tipo_indefinido"
-
-#     def visitParcela(self, ctx: LAParser.ParcelaContext):
-#         if ctx.parcela_unario():
-#             return self.visit(ctx.parcela_unario())
-#         elif ctx.parcela_nao_unario():
-#             return self.visit(ctx.parcela_nao_unario())
-#         return "tipo_indefinido"
-
-
-#     def visitParcela_unario(self, ctx: LAParser.Parcela_unarioContext):
-#         if ctx.NUM_INT():
-#             print("INT literal:", ctx.NUM_INT().getText())
-#             return "inteiro"
-#         if ctx.NUM_REAL():
-#             print("REAL literal:", ctx.NUM_REAL().getText())
+#         # Coerce integers to real numbers on multiplication and division
+#         if len(ctx.op2()) > 0 and all(type in ["real", "inteiro"] for type in types):
 #             return "real"
-#         if ctx.identificador():
-#             print("IDENT usado:", ctx.identificador().getText())
-#             return self.visitIdentificador(ctx.identificador())
-#         return "tipo_indefinido"
 
+#         return types
 
-#     def visitParcela_nao_unario(self, ctx: LAParser.Parcela_nao_unarioContext):
+#     def __getFatorType(self, ctx: LAParser.FatorContext):
+#         types = [self.__getParcelaType(parcela) for parcela in ctx.parcela()]
+#         return types
+
+#     def __getParcelaType(self, ctx: LAParser.ParcelaContext):
+#         if ctx.parcela_unario():
+#             return self.__getParcela_unarioType(ctx.parcela_unario())
+
+#         if ctx.parcela_nao_unario():
+#             return self.__getParcela_nao_unarioType(ctx.parcela_nao_unario())
+
+#     def __getParcela_unarioType(self, ctx: LAParser.Parcela_unarioContext):
+#         identifier = ctx.identificador()
+
+#         if identifier:
+#             line = identifier.start.line
+#             self.__checkDeclaredIdentifier(identifier, line)
+#             return self.__getIdentificadorType(identifier)
+
+#         if ctx.NUM_INT():
+#             return "inteiro"
+
+#         if ctx.NUM_REAL():
+#             return "real"
+
+#         if ctx.expressao():
+#             return self.__getExpressaoType(ctx.expressao()[0])
+
+#     def __getParcela_nao_unarioType(
+#         self, ctx: LAParser.Parcela_nao_unarioContext
+#     ):
 #         if ctx.CADEIA():
-#             return "literal"
-#         return self.visitChildren(ctx)
+#             return ["literal"]
 
-#     def is_compatible(self, tipo_destino, tipo_origem):
-#         if tipo_destino == tipo_origem:
+#     def __getIdentificadorType(self, ctx: LAParser.IdentificadorContext):
+#         identificador = str(ctx.IDENT()[0])
+
+#         return self.scope.buscar_simbolo(identificador)
+
+#     def __checkType(self, type: str, line) -> bool:
+#         if type not in self.validTypes:
+#             self.errors.append(f"Linha {line}: tipo {type} nao declarado")
+#             return False
+
+#         return True
+
+#     def __printErrors(self) -> str:
+#         return "\n".join(self.errors)
+
+#     def __checkDeclaredIdentifier(self, identifier, line):
+#         text = identifier.getText()
+#         symbol = self.scope.buscar_simbolo(text)
+
+#         if not symbol:
+#             self.errors.append(f"Linha {line}: identificador {text} nao declarado")
+
+#     def __checkAttributionType(
+#         self, identifier, identifier_type, expression_types, line
+#     ):
+#         if not all(self.__is_coercible(identifier_type, type) for type in expression_types):
+#             self.errors.append(
+#                 f"Linha {line}: atribuicao nao compativel para {identifier}"
+#             )
+
+#     def __is_coercible(self, type_a, type_b):
+#         if type_a == "real" and type_b == "inteiro":
 #             return True
-#         if tipo_destino in ["real", "inteiro"] and tipo_origem in ["real", "inteiro"]:
-#             return True
-#         if tipo_destino.startswith("^") and tipo_origem.startswith("&"):
-#             return True
-#         return False
+
+#         return type_a == type_b
+
+#     def __flatten_list(self, nested_list):
+#         flattened = []
+
+#         for item in nested_list:
+#             if isinstance(item, list):
+#                 flattened.extend(self.__flatten_list(item))
+#             else:
+#                 flattened.append(item)
+
+#         return flattened
