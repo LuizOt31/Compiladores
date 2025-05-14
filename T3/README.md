@@ -1,6 +1,6 @@
-# T2 - Analisador Sintático para Linguagem LA
+# T3 - Analisador Semântico para Linguagem LA
 
-Este é o segundo trabalho da disciplina de Compiladores, que consiste na implementação de um analisador sintático para a linguagem LA (Linguagem Algorítmica).
+Este é o terceiro trabalho da disciplina de Compiladores, que consiste na implementação de um analisador semântico para a linguagem LA (Linguagem Algorítmica).
 
 ## Requisitos
 
@@ -12,9 +12,11 @@ Este é o segundo trabalho da disciplina de Compiladores, que consiste na implem
 ## Estrutura do Projeto
 
 - `LA.g4`: Gramática da linguagem LA em formato ANTLR4
-- `main.py`: Programa principal que executa o analisador sintático
-- `antlr-4.13.2-complete.jar`: Biblioteca ANTLR4 para geração do parser
+- `main.py`: Programa principal que executa o analisador semântico
+- `scope.py`: Suporte a escopos ou tabela de símbolos
+- `semantico.py`: Implementação do analisador semântico
 - `test.py`: Script para executar testes automatizados
+- `antlr-4.13.2-complete.jar`: Biblioteca ANTLR4 para geração do parser
 - `casos-de-teste/`: Diretório com casos de teste
   - `entrada/`: Arquivos de entrada para testes
   - `saida_esperada/`: Saídas esperadas para cada teste
@@ -23,10 +25,10 @@ Este é o segundo trabalho da disciplina de Compiladores, que consiste na implem
 
 Para compilar o projeto, siga os passos abaixo:
 
-1. Entre na pasta T2:
+1. Entre na pasta T3:
 
    ```
-   cd T2
+   cd T3
    ```
 
 2. Certifique-se de ter o Java 11 ou superior instalado para executar o ANTLR4:
@@ -42,6 +44,11 @@ Para compilar o projeto, siga os passos abaixo:
    ```
    python3 --version
    ```
+   **OBS:** Caso esteja rodando em um WSL, crie e ative um ambiente virtual:
+      ```
+      python3 -m venv .venv
+      source .venv/bin/activate
+      ```
 
 4. Instale o pacote antlr4-python3-runtime:
 
@@ -49,17 +56,17 @@ Para compilar o projeto, siga os passos abaixo:
    pip install antlr4-python3-runtime
    ```
 
-5. Gere o analisador léxico e sintático:
+5. Gere o analisador léxico, sintático e estrututuras para o semântico:
 
    ```
-   java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 LA.g4
+   java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -visitor LA.g4
    ```
 
-   Este comando irá gerar os arquivos Python necessários para o analisador léxico e sintático, incluindo LALexer.py e LAParser.py, entre outros.
+   Este comando irá gerar os arquivos Python necessários para o analisador léxico e sintático, incluindo LALexer.py e LAParser.py, e também irá gerar os arquivo LAVisitor.py e LAListener.py para o analisador semântico.
 
 ## Execução
 
-Para executar o analisador sintático:
+Para executar o analisador semântico:
 
 ```bash
 python3 main.py <arquivo_entrada> <arquivo_saida>
@@ -92,14 +99,25 @@ Você também pode especificar diretórios personalizados:
 python3 test.py <dir_entrada> <dir_saida_esperada> <dir_saida_gerada>
 ```
 
-O script executa o analisador sintático em cada arquivo de entrada e compara a saída gerada com a saída esperada, fornecendo estatísticas e detalhes sobre os testes que passaram ou falharam.
+O script executa o analisador semântico em cada arquivo de entrada e compara a saída gerada com a saída esperada, fornecendo estatísticas e detalhes sobre os testes que passaram ou falharam.
 
 ## Funcionalidades
 
-O analisador sintático identifica:
+O analisador semântico implementa as seguintes verificações:
 
-- Erros léxicos (tokens não reconhecidos, comentários e cadeias não fechados)
-- Erros sintáticos (estrutura do programa inadequada)
+ - Identificador já declarado no mesmo escopo
+
+ - Uso de tipo não declarado
+
+ - Uso de identificador não declarado
+
+ - Atribuição incompatível com o tipo declarado
+
+ - Pilha de escopos para controle de visibilidade
+
+ - Tipagem básica de expressões (inteiro, real, literal, logico)
+
+ - Compatibilidade entre ponteiros e tipos básicos
 
 ## Exemplos de Saída
 
@@ -109,17 +127,15 @@ Em caso de sucesso:
 Fim da compilacao
 ```
 
-Em caso de erro léxico:
+Em caso de erro semântico:
 
 ```
-Linha X: Y - simbolo nao identificado
+Linha X: <Mensagem de erro>
 Fim da compilacao
 ```
-
-Em caso de erro sintático:
-
-```
-Linha X: erro sintatico proximo a Y
+Exemplo:
+   ```
+ Linha 7: tipo inteir nao declarado
+Linha 11: identificador idades nao declarado
 Fim da compilacao
-```
-
+   ```
