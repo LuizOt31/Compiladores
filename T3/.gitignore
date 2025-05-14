@@ -10,10 +10,10 @@ __pycache__/
 # === ANTLR ===
 *.interp        
 *.tokens
-*.lexer.py
-*.listener.py
-*.visitor.py
-*.parser.py
+*.Lexer.py
+*.Listener.py
+*.Visitor.py
+*.Parser.py
 /target/      
 
 # === IDE/Editor ===
