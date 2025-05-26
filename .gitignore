@@ -14,8 +14,8 @@ __pycache__/
 *Listener.py
 *Parser.py
 *Visitor.py
-/target/    
-/.antlr/  
+target/    
+.antlr/  
 
 # === IDE/Editor ===
 .vscode/        
@@ -24,4 +24,7 @@ __pycache__/
 
 # === RDM ===
 *.log         
-*.swp           
+*.swp    
+*.txt
+Makefile
+# === Miscellaneous ===       
