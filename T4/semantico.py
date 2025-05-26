@@ -14,6 +14,28 @@ class semantico(LAVisitor):
         super().visitPrograma(ctx)
         self.scope.sair_escopo()
         return "\n".join(self.errors) if self.errors else ""
+    
+    # def visitVariavel(self, ctx: LAParser.VariavelContext):
+    #     tipo = ctx.tipo().getText()
+    #     line = ctx.start.line
+        
+    #     # Verifica se o tipo existe
+    #     if tipo not in self.validTypes and not self.scope.buscar_simbolo(tipo):
+    #         self.errors.append(f"Linha {line}: tipo {tipo} nao declarado")
+        
+    #     # Verifica cada identificador
+    #     for identifier in ctx.identificador():
+    #         ident_text = identifier.getText()
+    #         ident_line = identifier.start.line
+            
+    #         # Verifica se já foi declarado no escopo atual
+    #         if any(symbol.name == ident_text for symbol in self.scope.escopo_atual()):
+    #             self.errors.append(f"Linha {ident_line}: identificador {ident_text} ja declarado anteriormente")
+    #         else:
+    #             try:
+    #                 self.scope.adicionar_simbolo(ident_text, tipo)
+    #             except SymbolAlreadyDefinedException:
+    #                 pass  # Já tratado acima
 
     def visitDeclaracao_local(self, ctx: LAParser.Declaracao_localContext):
         if ctx.getChild(0).getText() == 'declare':
@@ -82,7 +104,7 @@ class semantico(LAVisitor):
         self.scope.sair_escopo()
         self.current_function = None
         return result
-
+    
     def visitCmdRetorne(self, ctx: LAParser.CmdRetorneContext):
         if not self.current_function:
             self.errors.append(f"Linha {ctx.start.line}: comando retorne nao permitido nesse escopo")
