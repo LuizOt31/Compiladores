@@ -74,7 +74,6 @@ def main(input_file, output_file):
                 f.write("Fim da compilacao\n")
                 return
 
-            # Se chegou até aqui, executa a análise semântica
             analyzer = AnalisadorSemantico()
             analyzer.visit(tree)
 
