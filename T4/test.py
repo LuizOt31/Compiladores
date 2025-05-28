@@ -6,19 +6,15 @@ from pathlib import Path
 
 def run_test(input_file, expected_output_file, actual_output_file):
     """Executa o analisador sintático no arquivo de entrada e compara o resultado com a saída esperada."""
-    # Executa o analisador
     try:
         subprocess.run(['python3', 'main.py', input_file, actual_output_file], check=True)
         
-        # Lê o conteúdo do arquivo de saída
         with open(actual_output_file, 'r', encoding='utf-8') as f:
             actual_output = f.read().strip()
             
-        # Lê o conteúdo do arquivo de saída esperada
         with open(expected_output_file, 'r', encoding='utf-8') as f:
             expected_output = f.read().strip()
             
-        # Compara os resultados
         if actual_output == expected_output:
             print(f"✅ PASSOU: {os.path.basename(input_file)}")
             print(f"   Saída: {actual_output}")
@@ -28,7 +24,6 @@ def run_test(input_file, expected_output_file, actual_output_file):
             print(f"   Esperado: {expected_output}")
             print(f"   Obtido: {actual_output}")
             
-            # Mostra as diferenças
             diff = difflib.unified_diff(
                 expected_output.splitlines(),
                 actual_output.splitlines(),
@@ -49,7 +44,6 @@ def run_all_tests(input_dir, expected_output_dir, actual_output_dir):
     """Executa todos os testes comparando a saída com os resultados esperados."""
     input_files = []
     
-    # Encontra todos os arquivos .txt no diretório de entrada
     for file in os.listdir(input_dir):
         if file.endswith('.txt'):
             input_path = os.path.join(input_dir, file)
@@ -61,13 +55,11 @@ def run_all_tests(input_dir, expected_output_dir, actual_output_dir):
             else:
                 print(f"⚠️ AVISO: Arquivo de saída esperada não encontrado para {file}")
     
-    # Cria o diretório de saída se não existir
     os.makedirs(actual_output_dir, exist_ok=True)
     
     success_count = 0
     total_count = len(input_files)
     
-    # Executa cada teste
     for input_path, expected_output_path, filename in sorted(input_files):
         actual_output_path = os.path.join(actual_output_dir, f"saida_{filename}")
         
@@ -75,7 +67,6 @@ def run_all_tests(input_dir, expected_output_dir, actual_output_dir):
         if run_test(input_path, expected_output_path, actual_output_path):
             success_count += 1
     
-    # Exibe estatísticas
     print(f"\n📊 Resumo dos testes:")
     print(f"   Total: {total_count}")
     print(f"   Aprovados: {success_count}")
@@ -83,23 +74,19 @@ def run_all_tests(input_dir, expected_output_dir, actual_output_dir):
     print(f"   Taxa de sucesso: {(success_count/total_count)*100:.2f}%")
 
 if __name__ == "__main__":
-    # Valores padrão
     default_input_dir = os.path.join("casos-de-teste", "entrada")
     default_expected_output_dir = os.path.join("casos-de-teste", "saida_esperada") 
     default_actual_output_dir = "saida_gerada"
     
     if len(sys.argv) == 4:
-        # Usa os diretórios fornecidos pelo usuário
         input_dir = sys.argv[1]
         expected_output_dir = sys.argv[2]
         actual_output_dir = sys.argv[3]
     elif len(sys.argv) == 1:
-        # Usa os diretórios padrão
         input_dir = default_input_dir
         expected_output_dir = default_expected_output_dir
         actual_output_dir = default_actual_output_dir
         
-        # Verifica se os diretórios existem
         if not os.path.isdir(input_dir):
             print(f"⚠️ ERRO: Diretório de entrada '{input_dir}' não encontrado.")
             sys.exit(1)
