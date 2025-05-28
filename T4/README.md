@@ -53,16 +53,7 @@ Este é o quarto trabalho da disciplina de Compiladores, que consiste na impleme
    python3 --version
    ```
 
-4. **Crie e ative um ambiente virtual (recomendado):**
-
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate  # Linux/Mac
-   # ou
-   .venv\Scripts\activate     # Windows
-   ```
-
-5. **Instale as dependências:**
+4. **Instale as dependências:**
    ```bash
    pip install antlr4-python3-runtime
    ```
@@ -113,39 +104,6 @@ Ou especificando diretórios customizados:
 python3 test.py <dir_entrada> <dir_saida_esperada> <dir_saida_gerada>
 ```
 
-## Funcionalidades Implementadas
-
-O analisador semântico implementa verificações completas para:
-
-### Declarações e Escopos
-
-- ✅ Identificador já declarado no mesmo escopo
-- ✅ Uso de identificador não declarado
-- ✅ Uso de tipo não declarado
-- ✅ Controle de escopos (algoritmo, função, procedimento)
-- ✅ Visibilidade de símbolos entre escopos
-
-### Tipos e Atribuições
-
-- ✅ Atribuição incompatível com o tipo declarado
-- ✅ Tipagem de expressões (inteiro, real, literal, logico)
-- ✅ Compatibilidade entre tipos básicos
-- ✅ Verificação de tipos em registros
-- ✅ Verificação de ponteiros
-
-### Funções e Procedimentos
-
-- ✅ Verificação de parâmetros em chamadas de função
-- ✅ Incompatibilidade de tipos em parâmetros
-- ✅ Verificação de quantidade de parâmetros
-- ✅ Comando `retorne` apenas em funções
-
-### Estruturas de Controle
-
-- ✅ Processamento de comandos `se`/`senao`
-- ✅ Verificação de expressões em estruturas condicionais
-- ✅ Análise de expressões relacionais e lógicas
-
 ## Casos de Teste
 
 O projeto inclui 9 casos de teste que cobrem:
@@ -178,44 +136,3 @@ Linha 16: identificador vinho.Preco nao declarado
 Linha 28: identificador vinhocaro.tipoVinho nao declarado
 Fim da compilacao
 ```
-
-## Desenvolvimento
-
-### Estrutura do Código
-
-- **`AnalisadorSemantico`**: Classe principal que herda de `LAVisitor`
-- **`Escopo`**: Gerenciamento de escopos e tabela de símbolos
-- **`Simbolo`**: Representação de símbolos (variáveis, funções, tipos)
-
-### Principais Métodos
-
-- `visitPrograma()`: Ponto de entrada da análise
-- `visitDeclaracao_*()`: Processamento de declarações
-- `visitCmd*()`: Processamento de comandos
-- `obter_tipo_*()`: Inferência de tipos em expressões
-- `verificar_*()`: Métodos de verificação semântica
-
-## Limpeza do Projeto
-
-Os arquivos gerados automaticamente são ignorados pelo `.gitignore`:
-
-- Arquivos do ANTLR (`LAParser.py`, `LALexer.py`, etc.)
-- Cache do Python (`__pycache__/`)
-- Saídas de teste (`saida_gerada/*.txt`)
-
-Para limpar o projeto:
-
-```bash
-rm -f LAParser.py LALexer.py LAVisitor.py LAListener.py LA.tokens LALexer.tokens LA.interp LALexer.interp
-rm -rf __pycache__
-rm -f saida_gerada/*.txt
-```
-
-## Autor
-
-Desenvolvido como parte da disciplina de Compiladores.
-
----
-
-**Status do Projeto: ✅ Completo e Funcional**  
-**Última atualização: Maio 2024**
