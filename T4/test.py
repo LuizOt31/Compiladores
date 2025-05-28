@@ -5,7 +5,6 @@ import difflib
 from pathlib import Path
 
 def run_test(input_file, expected_output_file, actual_output_file):
-    """Executa o analisador sintático no arquivo de entrada e compara o resultado com a saída esperada."""
     try:
         subprocess.run(['python3', 'main.py', input_file, actual_output_file], check=True)
         
@@ -41,7 +40,6 @@ def run_test(input_file, expected_output_file, actual_output_file):
         return False
 
 def run_all_tests(input_dir, expected_output_dir, actual_output_dir):
-    """Executa todos os testes comparando a saída com os resultados esperados."""
     input_files = []
     
     for file in os.listdir(input_dir):
@@ -49,7 +47,6 @@ def run_all_tests(input_dir, expected_output_dir, actual_output_dir):
             input_path = os.path.join(input_dir, file)
             expected_output_path = os.path.join(expected_output_dir, file)
             
-            # Verifica se o arquivo de saída esperada existe
             if os.path.exists(expected_output_path):
                 input_files.append((input_path, expected_output_path, file))
             else:
