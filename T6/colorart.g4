@@ -19,6 +19,8 @@ circleDecl      : 'circle' INT INT 'radius' INT 'fill' ID ';' ;
 // Definir um retangulo
 rectangleDecl   : 'rectangle' INT INT 'width' INT 'height' INT 'fill' ID ';' ;
 
+squareDecl: 'square' INT INT 'width' INT 'fill' ID ';';
+
 // Definir um linha
 lineDecl        : 'line' INT INT 'to' INT INT 'stroke' ID ';' ;
 
@@ -31,3 +33,5 @@ HEXCOLOR        : '#' [0-9a-fA-F]{6} ;
 INT             : [0-9]+ ;
 
 WS              : [ \t\r\n]+ -> skip ;
+
+COMMENT : '%' ~[\r\n]* -> skip ;

@@ -1,0 +1,9 @@
+canvas 800x600;
+
+color red = #FF0000;
+color yellow = #ff00a6;
+
+circle 100 100 radius 50 fill red;
+square 50 50 width 50 fill yellow;
+line 20 20 to 10 10 stroke yellow;
+% Isso deve ser totalmente Ignorado e nao dar problema

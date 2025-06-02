@@ -1,14 +1,51 @@
-import svgwrite
+from antlr4 import *
+from lexical import lexical
+from antlr4.error.ErrorListener import ErrorListener
+import sys
+import re
 
-dwg = svgwrite.Drawing('output.svg', size=('800px', '600px'))
 
-# Círculo
-dwg.add(dwg.circle(center=(100, 100), r=50, fill='red'))
 
-# Retângulo
-dwg.add(dwg.rect(insert=(200, 150), size=(100, 80), fill='blue'))
+def main():
+    '''
+    Principal função do programa.
+    Le dois argumentos, os PATHs de arquivo de entrada e saída, respectivamente, e
+    imprime na saída os tokens com seus tipos no
+    estilo: <token, tipo token>
+    '''
 
-# Linha
-dwg.add(dwg.line(start=(50, 50), end=(300, 300), stroke='green'))
+    if len(sys.argv) < 3:
+        print("Uso: python3 script.py <arquivo_entrada> <arquivo_saida>")
+        return
 
-dwg.save()
+    # paths arquivo entrada e saída
+    entrada_path = FileStream(sys.argv[1], encoding="utf-8")
+    saida_path = sys.argv[2]
+
+    # abrindo arquivo de saída para escrever nele
+    with open(saida_path, mode='w') as saida:
+
+        lexer = lexical(entrada_path)
+
+        lexer.removeErrorListeners()
+
+        listener = CustomErrorListener(saida)
+        lexer.addErrorListener(listener)
+
+        while True:
+            token = lexer.nextToken()
+
+            # Se atingir o final do arquio (EOF), para o loop
+            if token.type == Token.EOF or listener.error_found:
+                break
+
+            # Só processa tokens do canal principal
+            if token.channel == Token.DEFAULT_CHANNEL:
+                tipo = lexer.symbolicNames[token.type]
+                if tipo in ['IDENT', 'CADEIA', 'NUM_INT', 'NUM_REAL']:
+                    print(f"<'{token.text}',{tipo}>", file=saida)
+                else:
+                    print(f"<'{token.text}','{token.text}'>", file=saida)
+
+if __name__ == '__main__':
+    main()
