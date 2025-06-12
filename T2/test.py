@@ -8,7 +8,7 @@ def run_test(input_file, expected_output_file, actual_output_file):
     """Executa o analisador sintático no arquivo de entrada e compara o resultado com a saída esperada."""
     # Executa o analisador
     try:
-        subprocess.run(['python', 'main.py', input_file, actual_output_file], check=True)
+        subprocess.run(['python3', 'main.py', input_file, actual_output_file], check=True)
         
         # Lê o conteúdo do arquivo de saída
         with open(actual_output_file, 'r', encoding='utf-8') as f:
