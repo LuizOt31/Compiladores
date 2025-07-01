@@ -6,7 +6,7 @@ program         : canvasDecl (colorDecl | shapeDecl)* EOF ;
 canvasDecl      : 'canvas' INT 'x' INT ';' ;
 
 // Definir cor
-colorDecl       : 'color' ID '=' HEXCOLOR ';' ;
+colorDecl       : 'color' VAR '=' HEXCOLOR ';' ;
 
 // Definir a forma geometrica
 shapeDecl       : circleDecl
@@ -14,18 +14,18 @@ shapeDecl       : circleDecl
                 | lineDecl ;
 
 // Definir um circulo
-circleDecl      : 'circle' INT INT 'radius' INT 'fill' ID ';' ;
+circleDecl      : 'circle' INT INT 'radius' INT 'fill' VAR ';' ;
 
 // Definir um retangulo
-rectangleDecl   : 'rectangle' INT INT 'width' INT 'height' INT 'fill' ID ';' ;
+rectangleDecl   : 'rectangle' INT INT 'width' INT 'height' INT 'fill' VAR ';' ;
 
-squareDecl: 'square' INT INT 'width' INT 'fill' ID ';';
+squareDecl: 'square' INT INT 'width' INT 'fill' VAR ';';
 
 // Definir um linha
-lineDecl        : 'line' INT INT 'to' INT INT 'stroke' ID ';' ;
+lineDecl        : 'line' INT INT 'to' INT INT 'stroke' VAR ';' ;
 
 // Tokens
-ID              : [a-zA-Z_][a-zA-Z_0-9]* ;
+VAR              : [a-zA-Z_][a-zA-Z_0-9]* ;
 
 // formato para definir uma cor
 HEXCOLOR        : '#' [0-9a-fA-F]{6} ;

@@ -17,7 +17,7 @@ public class colorartParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, ID=16, HEXCOLOR=17, 
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, VAR=16, HEXCOLOR=17, 
 		INT=18, WS=19, COMMENT=20;
 	public static final int
 		RULE_program = 0, RULE_canvasDecl = 1, RULE_colorDecl = 2, RULE_shapeDecl = 3, 
@@ -41,7 +41,7 @@ public class colorartParser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, "ID", "HEXCOLOR", "INT", "WS", "COMMENT"
+			null, null, null, null, "VAR", "HEXCOLOR", "INT", "WS", "COMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -216,7 +216,7 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ColorDeclContext extends ParserRuleContext {
-		public TerminalNode ID() { return getToken(colorartParser.ID, 0); }
+		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public TerminalNode HEXCOLOR() { return getToken(colorartParser.HEXCOLOR, 0); }
 		public ColorDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -233,7 +233,7 @@ public class colorartParser extends Parser {
 			setState(32);
 			match(T__3);
 			setState(33);
-			match(ID);
+			match(VAR);
 			setState(34);
 			match(T__4);
 			setState(35);
@@ -319,7 +319,7 @@ public class colorartParser extends Parser {
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
-		public TerminalNode ID() { return getToken(colorartParser.ID, 0); }
+		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public CircleDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -345,7 +345,7 @@ public class colorartParser extends Parser {
 			setState(48);
 			match(T__7);
 			setState(49);
-			match(ID);
+			match(VAR);
 			setState(50);
 			match(T__2);
 			}
@@ -367,7 +367,7 @@ public class colorartParser extends Parser {
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
-		public TerminalNode ID() { return getToken(colorartParser.ID, 0); }
+		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public RectangleDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -397,7 +397,7 @@ public class colorartParser extends Parser {
 			setState(59);
 			match(T__7);
 			setState(60);
-			match(ID);
+			match(VAR);
 			setState(61);
 			match(T__2);
 			}
@@ -419,7 +419,7 @@ public class colorartParser extends Parser {
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
-		public TerminalNode ID() { return getToken(colorartParser.ID, 0); }
+		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public SquareDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -445,7 +445,7 @@ public class colorartParser extends Parser {
 			setState(68);
 			match(T__7);
 			setState(69);
-			match(ID);
+			match(VAR);
 			setState(70);
 			match(T__2);
 			}
@@ -467,7 +467,7 @@ public class colorartParser extends Parser {
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
-		public TerminalNode ID() { return getToken(colorartParser.ID, 0); }
+		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public LineDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -495,7 +495,7 @@ public class colorartParser extends Parser {
 			setState(78);
 			match(T__14);
 			setState(79);
-			match(ID);
+			match(VAR);
 			setState(80);
 			match(T__2);
 			}
