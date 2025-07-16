@@ -10,30 +10,30 @@ else:
 
 def serializedATN():
     return [
-        4,1,20,83,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        4,1,21,84,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
         6,2,7,7,7,1,0,1,0,1,0,5,0,20,8,0,10,0,12,0,23,9,0,1,0,1,0,1,1,1,
-        1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,3,3,42,8,3,
-        1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,5,1,5,
-        1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,1,7,
-        1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,0,78,
-        0,16,1,0,0,0,2,26,1,0,0,0,4,32,1,0,0,0,6,41,1,0,0,0,8,43,1,0,0,0,
-        10,52,1,0,0,0,12,63,1,0,0,0,14,72,1,0,0,0,16,21,3,2,1,0,17,20,3,
-        4,2,0,18,20,3,6,3,0,19,17,1,0,0,0,19,18,1,0,0,0,20,23,1,0,0,0,21,
-        19,1,0,0,0,21,22,1,0,0,0,22,24,1,0,0,0,23,21,1,0,0,0,24,25,5,0,0,
-        1,25,1,1,0,0,0,26,27,5,1,0,0,27,28,5,18,0,0,28,29,5,2,0,0,29,30,
-        5,18,0,0,30,31,5,3,0,0,31,3,1,0,0,0,32,33,5,4,0,0,33,34,5,16,0,0,
-        34,35,5,5,0,0,35,36,5,17,0,0,36,37,5,3,0,0,37,5,1,0,0,0,38,42,3,
-        8,4,0,39,42,3,10,5,0,40,42,3,14,7,0,41,38,1,0,0,0,41,39,1,0,0,0,
-        41,40,1,0,0,0,42,7,1,0,0,0,43,44,5,6,0,0,44,45,5,18,0,0,45,46,5,
-        18,0,0,46,47,5,7,0,0,47,48,5,18,0,0,48,49,5,8,0,0,49,50,5,16,0,0,
-        50,51,5,3,0,0,51,9,1,0,0,0,52,53,5,9,0,0,53,54,5,18,0,0,54,55,5,
-        18,0,0,55,56,5,10,0,0,56,57,5,18,0,0,57,58,5,11,0,0,58,59,5,18,0,
-        0,59,60,5,8,0,0,60,61,5,16,0,0,61,62,5,3,0,0,62,11,1,0,0,0,63,64,
-        5,12,0,0,64,65,5,18,0,0,65,66,5,18,0,0,66,67,5,10,0,0,67,68,5,18,
-        0,0,68,69,5,8,0,0,69,70,5,16,0,0,70,71,5,3,0,0,71,13,1,0,0,0,72,
-        73,5,13,0,0,73,74,5,18,0,0,74,75,5,18,0,0,75,76,5,14,0,0,76,77,5,
-        18,0,0,77,78,5,18,0,0,78,79,5,15,0,0,79,80,5,16,0,0,80,81,5,3,0,
-        0,81,15,1,0,0,0,3,19,21,41
+        1,1,1,1,1,1,1,1,1,1,2,1,2,1,2,1,2,1,2,1,2,1,3,1,3,1,3,1,3,3,3,43,
+        8,3,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,4,1,5,1,5,1,5,1,5,1,5,1,5,
+        1,5,1,5,1,5,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,6,1,7,1,7,
+        1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,1,7,0,0,8,0,2,4,6,8,10,12,14,0,0,
+        80,0,16,1,0,0,0,2,26,1,0,0,0,4,32,1,0,0,0,6,42,1,0,0,0,8,44,1,0,
+        0,0,10,53,1,0,0,0,12,64,1,0,0,0,14,73,1,0,0,0,16,21,3,2,1,0,17,20,
+        3,4,2,0,18,20,3,6,3,0,19,17,1,0,0,0,19,18,1,0,0,0,20,23,1,0,0,0,
+        21,19,1,0,0,0,21,22,1,0,0,0,22,24,1,0,0,0,23,21,1,0,0,0,24,25,5,
+        0,0,1,25,1,1,0,0,0,26,27,5,3,0,0,27,28,5,19,0,0,28,29,5,16,0,0,29,
+        30,5,19,0,0,30,31,5,1,0,0,31,3,1,0,0,0,32,33,5,4,0,0,33,34,5,17,
+        0,0,34,35,5,2,0,0,35,36,5,18,0,0,36,37,5,1,0,0,37,5,1,0,0,0,38,43,
+        3,8,4,0,39,43,3,10,5,0,40,43,3,14,7,0,41,43,3,12,6,0,42,38,1,0,0,
+        0,42,39,1,0,0,0,42,40,1,0,0,0,42,41,1,0,0,0,43,7,1,0,0,0,44,45,5,
+        5,0,0,45,46,5,19,0,0,46,47,5,19,0,0,47,48,5,9,0,0,48,49,5,19,0,0,
+        49,50,5,13,0,0,50,51,5,17,0,0,51,52,5,1,0,0,52,9,1,0,0,0,53,54,5,
+        6,0,0,54,55,5,19,0,0,55,56,5,19,0,0,56,57,5,10,0,0,57,58,5,19,0,
+        0,58,59,5,11,0,0,59,60,5,19,0,0,60,61,5,13,0,0,61,62,5,17,0,0,62,
+        63,5,1,0,0,63,11,1,0,0,0,64,65,5,7,0,0,65,66,5,19,0,0,66,67,5,19,
+        0,0,67,68,5,12,0,0,68,69,5,19,0,0,69,70,5,13,0,0,70,71,5,17,0,0,
+        71,72,5,1,0,0,72,13,1,0,0,0,73,74,5,8,0,0,74,75,5,19,0,0,75,76,5,
+        19,0,0,76,77,5,14,0,0,77,78,5,19,0,0,78,79,5,19,0,0,79,80,5,15,0,
+        0,80,81,5,17,0,0,81,82,5,1,0,0,82,15,1,0,0,0,3,19,21,42
     ]
 
 class colorartParser ( Parser ):
@@ -46,15 +46,15 @@ class colorartParser ( Parser ):
 
     sharedContextCache = PredictionContextCache()
 
-    literalNames = [ "<INVALID>", "'canvas'", "'x'", "';'", "'color'", "'='", 
-                     "'circle'", "'radius'", "'fill'", "'rectangle'", "'width'", 
-                     "'height'", "'square'", "'line'", "'to'", "'stroke'" ]
+    literalNames = [ "<INVALID>", "';'", "'='", "'canvas'", "'color'", "'circle'", 
+                     "'rectangle'", "'square'", "'line'", "'radius'", "'width'", 
+                     "'height'", "'size'", "'fill'", "'to'", "'stroke'", 
+                     "'x'" ]
 
-    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "<INVALID>", "<INVALID>", "<INVALID>", "<INVALID>", 
-                      "VAR", "HEXCOLOR", "INT", "WS", "COMMENT" ]
+    symbolicNames = [ "<INVALID>", "<INVALID>", "<INVALID>", "CANVAS", "COLOR", 
+                      "CIRCLE", "RECTANGLE", "SQUARE", "LINE", "RADIUS", 
+                      "WIDTH", "HEIGHT", "SIZE", "FILL", "TO", "STROKE", 
+                      "X", "VAR", "HEXCOLOR", "INT", "WS", "COMMENT" ]
 
     RULE_program = 0
     RULE_canvasDecl = 1
@@ -71,24 +71,25 @@ class colorartParser ( Parser ):
     EOF = Token.EOF
     T__0=1
     T__1=2
-    T__2=3
-    T__3=4
-    T__4=5
-    T__5=6
-    T__6=7
-    T__7=8
-    T__8=9
-    T__9=10
-    T__10=11
-    T__11=12
-    T__12=13
-    T__13=14
-    T__14=15
-    VAR=16
-    HEXCOLOR=17
-    INT=18
-    WS=19
-    COMMENT=20
+    CANVAS=3
+    COLOR=4
+    CIRCLE=5
+    RECTANGLE=6
+    SQUARE=7
+    LINE=8
+    RADIUS=9
+    WIDTH=10
+    HEIGHT=11
+    SIZE=12
+    FILL=13
+    TO=14
+    STROKE=15
+    X=16
+    VAR=17
+    HEXCOLOR=18
+    INT=19
+    WS=20
+    COMMENT=21
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
@@ -138,6 +139,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -153,7 +160,7 @@ class colorartParser ( Parser ):
             self.state = 21
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 8784) != 0):
+            while (((_la) & ~0x3f) == 0 and ((1 << _la) & 496) != 0):
                 self.state = 19
                 self._errHandler.sync(self)
                 token = self._input.LA(1)
@@ -161,7 +168,7 @@ class colorartParser ( Parser ):
                     self.state = 17
                     self.colorDecl()
                     pass
-                elif token in [6, 9, 13]:
+                elif token in [5, 6, 7, 8]:
                     self.state = 18
                     self.shapeDecl()
                     pass
@@ -190,11 +197,17 @@ class colorartParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def CANVAS(self):
+            return self.getToken(colorartParser.CANVAS, 0)
+
         def INT(self, i:int=None):
             if i is None:
                 return self.getTokens(colorartParser.INT)
             else:
                 return self.getToken(colorartParser.INT, i)
+
+        def X(self):
+            return self.getToken(colorartParser.X, 0)
 
         def getRuleIndex(self):
             return colorartParser.RULE_canvasDecl
@@ -207,6 +220,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitCanvasDecl" ):
                 listener.exitCanvasDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCanvasDecl" ):
+                return visitor.visitCanvasDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -217,15 +236,15 @@ class colorartParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 26
-            self.match(colorartParser.T__0)
+            self.match(colorartParser.CANVAS)
             self.state = 27
             self.match(colorartParser.INT)
             self.state = 28
-            self.match(colorartParser.T__1)
+            self.match(colorartParser.X)
             self.state = 29
             self.match(colorartParser.INT)
             self.state = 30
-            self.match(colorartParser.T__2)
+            self.match(colorartParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -241,6 +260,9 @@ class colorartParser ( Parser ):
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
             self.parser = parser
+
+        def COLOR(self):
+            return self.getToken(colorartParser.COLOR, 0)
 
         def VAR(self):
             return self.getToken(colorartParser.VAR, 0)
@@ -259,6 +281,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitColorDecl" ):
                 listener.exitColorDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitColorDecl" ):
+                return visitor.visitColorDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -269,15 +297,15 @@ class colorartParser ( Parser ):
         try:
             self.enterOuterAlt(localctx, 1)
             self.state = 32
-            self.match(colorartParser.T__3)
+            self.match(colorartParser.COLOR)
             self.state = 33
             self.match(colorartParser.VAR)
             self.state = 34
-            self.match(colorartParser.T__4)
+            self.match(colorartParser.T__1)
             self.state = 35
             self.match(colorartParser.HEXCOLOR)
             self.state = 36
-            self.match(colorartParser.T__2)
+            self.match(colorartParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -306,6 +334,10 @@ class colorartParser ( Parser ):
             return self.getTypedRuleContext(colorartParser.LineDeclContext,0)
 
 
+        def squareDecl(self):
+            return self.getTypedRuleContext(colorartParser.SquareDeclContext,0)
+
+
         def getRuleIndex(self):
             return colorartParser.RULE_shapeDecl
 
@@ -317,6 +349,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitShapeDecl" ):
                 listener.exitShapeDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShapeDecl" ):
+                return visitor.visitShapeDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -325,23 +363,28 @@ class colorartParser ( Parser ):
         localctx = colorartParser.ShapeDeclContext(self, self._ctx, self.state)
         self.enterRule(localctx, 6, self.RULE_shapeDecl)
         try:
-            self.state = 41
+            self.state = 42
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [6]:
+            if token in [5]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 38
                 self.circleDecl()
                 pass
-            elif token in [9]:
+            elif token in [6]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 39
                 self.rectangleDecl()
                 pass
-            elif token in [13]:
+            elif token in [8]:
                 self.enterOuterAlt(localctx, 3)
                 self.state = 40
                 self.lineDecl()
+                pass
+            elif token in [7]:
+                self.enterOuterAlt(localctx, 4)
+                self.state = 41
+                self.squareDecl()
                 pass
             else:
                 raise NoViableAltException(self)
@@ -362,11 +405,20 @@ class colorartParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def CIRCLE(self):
+            return self.getToken(colorartParser.CIRCLE, 0)
+
         def INT(self, i:int=None):
             if i is None:
                 return self.getTokens(colorartParser.INT)
             else:
                 return self.getToken(colorartParser.INT, i)
+
+        def RADIUS(self):
+            return self.getToken(colorartParser.RADIUS, 0)
+
+        def FILL(self):
+            return self.getToken(colorartParser.FILL, 0)
 
         def VAR(self):
             return self.getToken(colorartParser.VAR, 0)
@@ -382,6 +434,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitCircleDecl" ):
                 listener.exitCircleDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCircleDecl" ):
+                return visitor.visitCircleDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -391,22 +449,22 @@ class colorartParser ( Parser ):
         self.enterRule(localctx, 8, self.RULE_circleDecl)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 43
-            self.match(colorartParser.T__5)
             self.state = 44
-            self.match(colorartParser.INT)
+            self.match(colorartParser.CIRCLE)
             self.state = 45
             self.match(colorartParser.INT)
             self.state = 46
-            self.match(colorartParser.T__6)
-            self.state = 47
             self.match(colorartParser.INT)
+            self.state = 47
+            self.match(colorartParser.RADIUS)
             self.state = 48
-            self.match(colorartParser.T__7)
+            self.match(colorartParser.INT)
             self.state = 49
-            self.match(colorartParser.VAR)
+            self.match(colorartParser.FILL)
             self.state = 50
-            self.match(colorartParser.T__2)
+            self.match(colorartParser.VAR)
+            self.state = 51
+            self.match(colorartParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -423,11 +481,23 @@ class colorartParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def RECTANGLE(self):
+            return self.getToken(colorartParser.RECTANGLE, 0)
+
         def INT(self, i:int=None):
             if i is None:
                 return self.getTokens(colorartParser.INT)
             else:
                 return self.getToken(colorartParser.INT, i)
+
+        def WIDTH(self):
+            return self.getToken(colorartParser.WIDTH, 0)
+
+        def HEIGHT(self):
+            return self.getToken(colorartParser.HEIGHT, 0)
+
+        def FILL(self):
+            return self.getToken(colorartParser.FILL, 0)
 
         def VAR(self):
             return self.getToken(colorartParser.VAR, 0)
@@ -443,6 +513,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitRectangleDecl" ):
                 listener.exitRectangleDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRectangleDecl" ):
+                return visitor.visitRectangleDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -452,26 +528,26 @@ class colorartParser ( Parser ):
         self.enterRule(localctx, 10, self.RULE_rectangleDecl)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 52
-            self.match(colorartParser.T__8)
             self.state = 53
-            self.match(colorartParser.INT)
+            self.match(colorartParser.RECTANGLE)
             self.state = 54
             self.match(colorartParser.INT)
             self.state = 55
-            self.match(colorartParser.T__9)
+            self.match(colorartParser.INT)
             self.state = 56
-            self.match(colorartParser.INT)
+            self.match(colorartParser.WIDTH)
             self.state = 57
-            self.match(colorartParser.T__10)
-            self.state = 58
             self.match(colorartParser.INT)
+            self.state = 58
+            self.match(colorartParser.HEIGHT)
             self.state = 59
-            self.match(colorartParser.T__7)
+            self.match(colorartParser.INT)
             self.state = 60
-            self.match(colorartParser.VAR)
+            self.match(colorartParser.FILL)
             self.state = 61
-            self.match(colorartParser.T__2)
+            self.match(colorartParser.VAR)
+            self.state = 62
+            self.match(colorartParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -488,11 +564,20 @@ class colorartParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def SQUARE(self):
+            return self.getToken(colorartParser.SQUARE, 0)
+
         def INT(self, i:int=None):
             if i is None:
                 return self.getTokens(colorartParser.INT)
             else:
                 return self.getToken(colorartParser.INT, i)
+
+        def SIZE(self):
+            return self.getToken(colorartParser.SIZE, 0)
+
+        def FILL(self):
+            return self.getToken(colorartParser.FILL, 0)
 
         def VAR(self):
             return self.getToken(colorartParser.VAR, 0)
@@ -508,6 +593,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitSquareDecl" ):
                 listener.exitSquareDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSquareDecl" ):
+                return visitor.visitSquareDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -517,22 +608,22 @@ class colorartParser ( Parser ):
         self.enterRule(localctx, 12, self.RULE_squareDecl)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 63
-            self.match(colorartParser.T__11)
             self.state = 64
-            self.match(colorartParser.INT)
+            self.match(colorartParser.SQUARE)
             self.state = 65
             self.match(colorartParser.INT)
             self.state = 66
-            self.match(colorartParser.T__9)
-            self.state = 67
             self.match(colorartParser.INT)
+            self.state = 67
+            self.match(colorartParser.SIZE)
             self.state = 68
-            self.match(colorartParser.T__7)
+            self.match(colorartParser.INT)
             self.state = 69
-            self.match(colorartParser.VAR)
+            self.match(colorartParser.FILL)
             self.state = 70
-            self.match(colorartParser.T__2)
+            self.match(colorartParser.VAR)
+            self.state = 71
+            self.match(colorartParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)
@@ -549,11 +640,20 @@ class colorartParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+        def LINE(self):
+            return self.getToken(colorartParser.LINE, 0)
+
         def INT(self, i:int=None):
             if i is None:
                 return self.getTokens(colorartParser.INT)
             else:
                 return self.getToken(colorartParser.INT, i)
+
+        def TO(self):
+            return self.getToken(colorartParser.TO, 0)
+
+        def STROKE(self):
+            return self.getToken(colorartParser.STROKE, 0)
 
         def VAR(self):
             return self.getToken(colorartParser.VAR, 0)
@@ -569,6 +669,12 @@ class colorartParser ( Parser ):
             if hasattr( listener, "exitLineDecl" ):
                 listener.exitLineDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLineDecl" ):
+                return visitor.visitLineDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -578,24 +684,24 @@ class colorartParser ( Parser ):
         self.enterRule(localctx, 14, self.RULE_lineDecl)
         try:
             self.enterOuterAlt(localctx, 1)
-            self.state = 72
-            self.match(colorartParser.T__12)
             self.state = 73
-            self.match(colorartParser.INT)
+            self.match(colorartParser.LINE)
             self.state = 74
             self.match(colorartParser.INT)
             self.state = 75
-            self.match(colorartParser.T__13)
-            self.state = 76
             self.match(colorartParser.INT)
+            self.state = 76
+            self.match(colorartParser.TO)
             self.state = 77
             self.match(colorartParser.INT)
             self.state = 78
-            self.match(colorartParser.T__14)
+            self.match(colorartParser.INT)
             self.state = 79
-            self.match(colorartParser.VAR)
+            self.match(colorartParser.STROKE)
             self.state = 80
-            self.match(colorartParser.T__2)
+            self.match(colorartParser.VAR)
+            self.state = 81
+            self.match(colorartParser.T__0)
         except RecognitionException as re:
             localctx.exception = re
             self._errHandler.reportError(self, re)

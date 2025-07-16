@@ -1,0 +1,1 @@
+Erro Sintático na Linha 1:10: Próximo de 'x200'

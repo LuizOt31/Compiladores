@@ -1,60 +1,90 @@
+import sys
 from antlr4 import *
 from antlr4.error.ErrorListener import ErrorListener
-import sys
+
 from colorartLexer import colorartLexer
+from colorartParser import colorartParser
+from colorartListener import colorartListener
+
+from semantico import AnalisadorSemantico, SemanticError
 
 class CustomErrorListener(ErrorListener):
-    def __init__(self, output_file):
+    """
+    Listener customizado para capturar erros sintáticos e reportá-los.
+    """
+    def __init__(self, output_file_path):
         super().__init__()
-        self.output = output_file
-        self.error_found = False
+        self.output_file_path = output_file_path
 
     def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        if self.error_found:
-            return
-        self.error_found = True
+        # Extrai o texto do token ofensivo
+        token_text = offendingSymbol.text if offendingSymbol else 'desconhecido'
         
-        # CORREÇÃO: Usamos a exceção 'e' para obter o texto do erro
-        input_stream = e.input
-        start_index = e.startIndex
-        texto_invalido = input_stream.getText(start_index, start_index)
+        # Cria a mensagem de erro
+        error_message = f"Erro Sintático na Linha {line}:{column}: Próximo de '{token_text}'\n"
         
-        mensagem_erro = f"Linha {line}:{column} erro lexico: simbolo '{texto_invalido}' nao reconhecido.\n"
+        # Escreve o erro no arquivo de saída e interrompe a execução
+        with open(self.output_file_path, 'w', encoding='utf-8') as f:
+            f.write(error_message)
         
-        self.output.seek(0)
-        self.output.truncate()
-        self.output.write(mensagem_erro)
+        # Lança uma exceção para parar a compilação
+        raise Exception(error_message)
 
 
 def main():
-    '''
-    Principal função do programa.
-    Funciona como um validador léxico. Lê um arquivo de entrada e verifica se há
-    erros léxicos.
-    - Se encontrar um erro, escreve a mensagem de erro no arquivo de saída e para.
-    - Se não houver erros, escreve uma mensagem de sucesso no arquivo de saída.
-    '''
+    """
+    Função principal que orquestra as fases do compilador:
+    1. Análise Léxica e Sintática
+    2. Análise Semântica
+    """
     if len(sys.argv) < 3:
-        print("Uso: python3 seu_script.py <arquivo_entrada> <arquivo_saida>")
+        print("Uso: python3 main.py <arquivo_entrada> <arquivo_saida>")
         return
 
-    input_path = FileStream(sys.argv[1], encoding="utf-8")
+    input_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    with open(output_path, 'w', encoding='utf-8') as saida:
-        lexer = colorartLexer(input_path)
-        lexer.removeErrorListeners()
+    try:
+        # --- Fase 1: Análise Léxica e Sintática ---
+        input_stream = FileStream(input_path, encoding='utf-8')
+        lexer = colorartLexer(input_stream)
+        token_stream = CommonTokenStream(lexer)
+        parser = colorartParser(token_stream)
 
-        error_listener = CustomErrorListener(saida)
-        lexer.addErrorListener(error_listener)
+        # Remove os listeners padrão e adiciona o nosso
+        parser.removeErrorListeners()
+        error_listener = CustomErrorListener(output_path)
+        parser.addErrorListener(error_listener)
+        
+        # Inicia a análise sintática a partir da regra 'program'
+        tree = parser.program()
 
-        while not error_listener.error_found:
-            token = lexer.nextToken()
-            if token.type == Token.EOF:
-                break # Fim do arquivo, saia do loop
+        # Se a análise sintática passou (nenhuma exceção foi lançada), prosseguimos.
 
-        if not error_listener.error_found:
-            saida.write("Analise lexica concluida sem erros.\n")
+        # --- Fase 2: Análise Semântica ---
+        # O AnalisadorSemantico é um Listener, então usamos o ParseTreeWalker
+        walker = ParseTreeWalker()
+        semantic_analyzer = AnalisadorSemantico() # Nossa classe do arquivo semantico.py
+        walker.walk(semantic_analyzer, tree)
+
+        # Se chegamos aqui sem levantar uma SemanticError, a análise foi um sucesso.
+        with open(output_path, 'w', encoding='utf-8') as saida:
+            saida.write("Analise semantica concluida sem erros.\n")
+        print("Análise Semântica concluída com sucesso!")
+
+    except SemanticError as se:
+        # Captura e escreve o erro semântico que nós criamos
+        with open(output_path, 'w', encoding='utf-8') as saida:
+            saida.write(str(se) + "\n")
+        print(se) # Mostra o erro no console
+        sys.exit(1)
+        
+    except Exception as e:
+        # Captura outros erros (sintáticos do nosso listener ou de arquivo)
+        # A mensagem de erro já foi escrita no arquivo pelo listener,
+        # então aqui só precisamos imprimir no console e sair.
+        print(e)
+        sys.exit(1)
 
 
 if __name__ == '__main__':
