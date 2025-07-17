@@ -1,5 +1,0 @@
-canvas 800x600;
-
-color red = #FF0000;
-
-circle 100 100 radius 50 fill red;

@@ -1,0 +1,33 @@
+// Teste 3: Desenho complexo com múltiplas formas
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0066CC" }
+cor { id=verde, valor="#00AA00" }
+cor { id=amarelo, valor="#FFFF00" }
+cor { id=roxo, valor="#8800CC" }
+cor { id=laranja, valor="#FF8800" }
+
+variavel { id=centro_x, tipo=inteiro, valor=400 }
+variavel { id=centro_y, tipo=inteiro, valor=300 }
+
+// Sol
+circulo { centro=[700, 100], raio=60, cor=[amarelo], borda=[laranja] }
+
+// Montanhas (polígonos)
+poligono { pontos=[0,400, 150,250, 300,400], cor=[verde] }
+poligono { pontos=[200,400, 350,200, 500,400], cor=[verde] }
+
+// Casa principal
+retangulo { posicao=[300, 300], largura=200, altura=120, cor=[azul], borda=[roxo] }
+
+// Telhado
+poligono { pontos=[280,300, 400,220, 520,300], cor=[vermelho] }
+
+// Porta
+retangulo { posicao=[380, 360], largura=40, altura=60, cor=[laranja] }
+
+// Janelas
+circulo { centro=[340, 340], raio=15, cor=[amarelo] }
+circulo { centro=[460, 340], raio=15, cor=[amarelo] }
+
+// Chão
+linha { inicio=[0, 420], fim=[800, 420], cor=[verde], espessura=5 } 

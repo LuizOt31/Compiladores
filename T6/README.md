@@ -1,249 +1,309 @@
-# T6 - Analisador Léxico para Linguagem ColorArt
+# ColorArt - Linguagem de Desenho Geométrico
 
-Este é o sexto trabalho da disciplina de Compiladores, que consiste na implementação de um **analisador léxico** para a linguagem ColorArt - uma linguagem de domínio específico para criação de desenhos e gráficos vetoriais.
+## Visão Geral
 
-## Descrição do Projeto
+ColorArt é uma linguagem específica de domínio (DSL) para criação de desenhos vetoriais simples usando SVG. A linguagem permite definir cores, variáveis e desenhar formas geométricas básicas.
 
-O T6 implementa um analisador léxico que realiza:
-- **Tokenização**: Reconhecimento dos tokens da linguagem ColorArt
-- **Validação Léxica**: Detecção de símbolos não reconhecidos
-- **Tratamento de Erros**: Relatório detalhado de erros léxicos encontrados
+## Instalação e Dependências
 
-### Exemplo de Funcionamento
-
-**Entrada (Linguagem ColorArt):**
-```colorart
-canvas 800x600;
-
-color red = #FF0000;
-color blue = #0000FF;
-
-circle 100 100 radius 50 fill red;
-rectangle 200 150 width 100 height 80 fill blue;
-line 50 50 to 300 300 stroke red;
-```
-
-**Saída (Análise bem-sucedida):**
-```
-Analise lexica concluida sem erros.
-```
-
-**Saída (Com erro léxico):**
-```
-Linha 5:10 erro lexico: simbolo '@' nao reconhecido.
-```
-
-## Requisitos do Sistema
-
-- **Java JDK 11 ou superior** (para executar o ANTLR4)
-- **Python 3.6 ou superior**
-- **ANTLR4** (JAR incluído no projeto)
-- **Biblioteca Python:** `antlr4-python3-runtime`
-
-## Estrutura do Projeto
-
-### Arquivos Principais
-
-- `colorart.g4`: Gramática da linguagem ColorArt em formato ANTLR4
-- `main.py`: Programa principal que executa o analisador léxico
-- `exemplo.py`: Exemplo de geração de SVG usando svgwrite
-- `antlr-4.13.2-complete.jar`: Biblioteca ANTLR4 para geração do lexer
-
-### Diretórios
-
-- `casos-de-teste/`: Casos de teste do analisador
-  - `lexico/entrada/`: Programas ColorArt para teste (5 casos)
-  - `lexico/saida/`: Saídas esperadas dos testes léxicos
-  - `sintatico/`: Casos de teste sintáticos (futuros)
-- `.antlr/`: Arquivos temporários do ANTLR4
-- `__pycache__/`: Cache do Python
-
-### Arquivos Gerados (ANTLR4)
-
-Após compilação da gramática, são gerados:
-- `colorartLexer.py`: Analisador léxico principal
-- `colorartParser.py`: Analisador sintático (para uso futuro)
-- `colorartListener.py`: Interface listener
-- Arquivos auxiliares (`.tokens`, `.interp`)
-
-## Instalação e Configuração
-
-### 1. Verificar Requisitos
-
-Verifique se possui Java 11+ instalado:
-```bash
-java --version
-```
-
-Verifique se possui Python 3.6+ instalado:
-```bash
-python3 --version
-```
-
-### 2. Instalar Dependências Python
+### Pré-requisitos
+- Python 3.7+
+- ANTLR4 runtime para Python
 
 ```bash
 pip install antlr4-python3-runtime
 ```
 
-Para o exemplo SVG (opcional):
+### Compilação da Gramática
 ```bash
-pip install svgwrite
-```
-
-### 3. Gerar Arquivos do ANTLR4
-
-Execute o comando para gerar os arquivos Python a partir da gramática:
-```bash
-java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -visitor -listener colorart.g4
+java -jar antlr-4.13.0-complete.jar -visitor -Dlanguage=Python3 ColorArt.g4
 ```
 
 ## Execução
 
-### Análise de Arquivo Individual
-
-Para analisar um programa ColorArt:
-
 ```bash
-python3 main.py <arquivo_entrada> <arquivo_saida>
+python3 colorart.py <arquivo_entrada>.ca <arquivo_saida>.svg
 ```
 
 **Exemplo:**
 ```bash
-python3 main.py casos-de-teste/lexico/entrada/1-teste-colorart.txt saida.txt
+python3 colorart.py casos-de-teste/entradas/teste1.ca saida.svg
 ```
 
-### Execução do Exemplo SVG
+## Testador Automático
 
-Para gerar um exemplo de SVG:
+Para executar todos os casos de teste automaticamente:
+
 ```bash
-python3 exemplo.py
+python3 testador.py
 ```
 
-Isso criará o arquivo `output.svg` com formas geométricas.
+O testador irá:
+- Executar todos os arquivos `.ca` da pasta `casos-de-teste/entradas/`
+- Comparar as saídas com os arquivos esperados em `casos-de-teste/saidas-esperadas/`
+- Gerar relatório de sucessos e falhas
 
-## Características da Linguagem ColorArt
+## Testador de Erros
 
-A linguagem ColorArt é uma DSL (Domain Specific Language) para criação de desenhos vetoriais que suporta:
+Para validar a detecção de erros do compilador:
 
-### Declaração de Canvas
-```colorart
-canvas 800x600;  // Define área de desenho de 800x600 pixels
+```bash
+python3 testador_erros.py
 ```
 
-### Definição de Cores
-```colorart
-color red = #FF0000;     // Cor vermelha
-color blue = #0000FF;    // Cor azul
-color green = #00FF00;   // Cor verde
+O testador de erros irá:
+- Executar casos de teste que devem gerar erros
+- Validar se os tipos corretos de erro são detectados
+- Verificar erros léxicos, sintáticos e semânticos
+
+### Casos de Teste de Erro
+
+#### Erros Léxicos
+- **`teste_erro_lexico.ca`** - Caracteres inválidos (ex: `@` em identificadores)
+
+#### Erros Sintáticos  
+- **`teste_erro_sintatico.ca`** - Sintaxe incorreta (chaves não fechadas, vírgulas ausentes)
+
+#### Erros Semânticos
+- **`teste_erro_semantico.ca`** - Cores não declaradas e declarações duplicadas
+- **`teste_erro_variavel.ca`** - Variáveis duplicadas
+- **`teste_erro_complexo.ca`** - Múltiplos erros semânticos (7 erros detectados)
+
+### Resultados Esperados
+
+```
+============================================================
+TESTADOR DE ERROS - COLORART
+============================================================
+Executando 5 teste(s) de erro
+
+Teste teste_erro_lexico.ca: Erro léxico - caractere inválido
+  Esperado: LEXICO -> PASSOU ✅
+Teste teste_erro_sintatico.ca: Erro sintático - sintaxe incorreta
+  Esperado: SINTATICO -> PASSOU ✅
+Teste teste_erro_semantico.ca: Erro semântico - cores não declaradas
+  Esperado: SEMANTICO -> PASSOU ✅
+Teste teste_erro_variavel.ca: Erro semântico - variável duplicada
+  Esperado: SEMANTICO -> PASSOU ✅
+Teste teste_erro_complexo.ca: Erro semântico - múltiplos erros
+  Esperado: SEMANTICO -> PASSOU ✅
+
+============================================================
+RESULTADO: 5/5 testes de erro passaram
+✅ Todos os testes de erro passaram!
+   O compilador está detectando corretamente os erros!
+============================================================
+```
+
+## Sintaxe da Linguagem
+
+### Declaração de Cores
+```
+cor { id=<nome>, valor="<valor_hex>" }
+```
+
+**Exemplo:**
+```
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0000FF" }
+```
+
+### Declaração de Variáveis
+```
+variavel { id=<nome>, tipo=<tipo>, valor=<valor> }
+```
+
+**Tipos suportados:** `inteiro`, `cor`
+
+**Exemplo:**
+```
+variavel { id=raio_padrao, tipo=inteiro, valor=50 }
+variavel { id=cor_fundo, tipo=cor, valor=azul }
 ```
 
 ### Formas Geométricas
 
-**Círculos:**
-```colorart
-circle 100 100 radius 50 fill red;  // Círculo em (100,100) com raio 50
+#### Círculo
+```
+circulo { centro=[x, y], raio=r [, cor=[cor_id]] [, borda=[cor_id]] }
 ```
 
-**Retângulos:**
-```colorart
-rectangle 200 150 width 100 height 80 fill blue;  // Retângulo 100x80
+#### Retângulo
+```
+retangulo { posicao=[x, y], largura=w, altura=h [, cor=[cor_id]] [, borda=[cor_id]] }
 ```
 
-**Linhas:**
-```colorart
-line 50 50 to 300 300 stroke red;  // Linha de (50,50) até (300,300)
+#### Linha
+```
+linha { inicio=[x1, y1], fim=[x2, y2] [, cor=[cor_id]] [, espessura=n] }
 ```
 
-### Tokens Reconhecidos
+#### Polígono
+```
+poligono { pontos=[x1,y1, x2,y2, x3,y3, ...] [, cor=[cor_id]] [, borda=[cor_id]] }
+```
 
-- **Palavras-chave**: `canvas`, `color`, `circle`, `rectangle`, `line`, `radius`, `width`, `height`, `fill`, `stroke`, `to`
-- **Operadores**: `=`, `x` (para dimensões)
-- **Identificadores**: Nomes de variáveis `[a-zA-Z_][a-zA-Z_0-9]*`
-- **Cores Hexadecimais**: `#[0-9a-fA-F]{6}`
-- **Números Inteiros**: `[0-9]+`
-- **Comentários**: `% comentário até o final da linha`
-- **Delimitadores**: `;`
+## Exemplos
+
+### Exemplo 1: Formas Básicas
+```
+// Definindo cores
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0000FF" }
+cor { id=verde, valor="#00FF00" }
+
+// Desenhando formas
+circulo { centro=[100, 100], raio=50, cor=[vermelho] }
+retangulo { posicao=[200, 50], largura=100, altura=80, cor=[azul], borda=[verde] }
+linha { inicio=[50, 200], fim=[300, 250], cor=[verde], espessura=3 }
+```
+
+### Exemplo 2: Casa Simples
+```
+// Cores
+cor { id=laranja, valor="#FFA500" }
+cor { id=roxo, valor="#800080" }
+cor { id=preto, valor="#000000" }
+
+// Casa
+retangulo { posicao=[100, 200], largura=200, altura=150, cor=[laranja], borda=[preto] }
+
+// Telhado
+poligono { pontos=[100,200, 200,100, 300,200], cor=[roxo], borda=[preto] }
+
+// Porta
+retangulo { posicao=[170, 280], largura=60, altura=70, cor=[preto] }
+```
+
+## Características da Linguagem
+
+### Validações Semânticas
+- Verificação de cores declaradas antes do uso
+- Detecção de declarações duplicadas
+- Validação de tipos de variáveis
+
+### Saída SVG
+- Gera código SVG padrão (800x600)
+- Suporte completo a cores hexadecimais
+- Elementos SVG compatíveis com navegadores
+
+### Tratamento de Erros
+- Erros léxicos, sintáticos e semânticos
+- Mensagens de erro com linha e coluna
+- Relatório detalhado de problemas
+
+## Estrutura do Projeto
+
+```
+color-art/
+├── ColorArt.g4                    # Gramática ANTLR4
+├── colorart.py                    # Programa principal
+├── testador.py                    # Testador automático (casos funcionais)
+├── testador_erros.py              # Testador de erros (validação)
+├── ColorArtSemantico.py           # Analisador semântico
+├── GeradorSVG.py                  # Gerador de código SVG
+├── TabelaDeSimbolos.py            # Tabela de símbolos
+├── ColorArtSemanticoUtils.py      # Utilitários semânticos
+├── casos-de-teste/
+│   ├── entradas/                  # Arquivos de teste (.ca)
+│   │   ├── teste1.ca             # Formas básicas
+│   │   ├── teste2.ca             # Casa simples
+│   │   ├── teste3.ca             # Paisagem complexa
+│   │   ├── teste_erro_lexico.ca  # Erro léxico
+│   │   ├── teste_erro_sintatico.ca # Erro sintático
+│   │   ├── teste_erro_semantico.ca # Erro semântico
+│   │   ├── teste_erro_variavel.ca  # Variável duplicada
+│   │   └── teste_erro_complexo.ca  # Múltiplos erros
+│   ├── saidas-esperadas/          # Saídas SVG de referência
+│   ├── saidas/                    # Saídas geradas pelos testes
+│   └── saidas-geradas/            # Saídas manuais para verificação
+├── antlr-4.13.0-complete.jar     # ANTLR4 JAR
+└── README.md                      # Esta documentação
+```
 
 ## Casos de Teste
 
-O projeto inclui 5 casos de teste léxicos que cobrem:
+### Testes Funcionais
 
-1. **Teste 1**: Programa básico válido (canvas + cor + círculo)
-2. **Teste 2**: Programa com erros léxicos (vírgula inválida, símbolo #)
-3. **Teste 3**: Teste com identificadores e estruturas válidas
-4. **Teste 4**: Teste de tokens específicos
-5. **Teste 5**: Programa mais complexo com múltiplas formas
+#### Teste 1: Formas Básicas
+- **Entrada:** `casos-de-teste/entradas/teste1.ca`
+- **Descrição:** Círculo, retângulo e linha com cores básicas
+- **Saída:** SVG com formas geométricas simples
 
-## Funcionamento do Analisador Léxico
+#### Teste 2: Casa Simples
+- **Entrada:** `casos-de-teste/entradas/teste2.ca`
+- **Descrição:** Desenho de uma casa com polígono (telhado) e formas básicas
+- **Saída:** SVG representando uma casa colorida
 
-### Tokenização
-- Utiliza ANTLR4 para reconhecimento de padrões
-- Gramática regular para tokens da linguagem
-- Tratamento de espaços em branco e comentários
+#### Teste 3: Paisagem Complexa
+- **Entrada:** `casos-de-teste/entradas/teste3.ca`
+- **Descrição:** Paisagem com sol, montanhas, casa e múltiplas cores
+- **Saída:** SVG complexo demonstrando todas as funcionalidades
 
-### Tratamento de Erros
-- Detecção de símbolos não reconhecidos
-- Relatório de erro com linha e coluna
-- Parada na primeira ocorrência de erro
+### Testes de Erro
 
-### Saída do Analisador
+#### Teste de Erro Léxico
+- **Entrada:** `casos-de-teste/entradas/teste_erro_lexico.ca`
+- **Descrição:** Caractere inválido `@` em identificador
+- **Resultado:** Erro léxico detectado na linha 5
 
-O comportamento do analisador depende da entrada:
+#### Teste de Erro Sintático
+- **Entrada:** `casos-de-teste/entradas/teste_erro_sintatico.ca`
+- **Descrição:** Chaves não fechadas e vírgulas ausentes
+- **Resultado:** Erro sintático detectado
 
-- **Sem erros léxicos**:
-  ```
-  Analise lexica concluida sem erros.
-  ```
+#### Teste de Erro Semântico
+- **Entrada:** `casos-de-teste/entradas/teste_erro_semantico.ca`
+- **Descrição:** Cores não declaradas e declaração duplicada
+- **Resultado:** 3 erros semânticos detectados
 
-- **Com erros léxicos**:
-  ```
-  Linha 5:10 erro lexico: simbolo '@' nao reconhecido.
-  ```
+#### Teste de Variável Duplicada
+- **Entrada:** `casos-de-teste/entradas/teste_erro_variavel.ca`
+- **Descrição:** Variável declarada duas vezes
+- **Resultado:** 1 erro semântico detectado
 
-## Execução em Linha de Comando
+#### Teste Complexo de Erros
+- **Entrada:** `casos-de-teste/entradas/teste_erro_complexo.ca`
+- **Descrição:** Múltiplos tipos de erros semânticos
+- **Resultado:** 7 erros semânticos detectados
 
-O analisador segue o padrão exigido:
-```bash
-python3 main.py <arquivo_entrada> <arquivo_saida>
-```
+## Limitações Atuais
 
-- **Argumento 1**: Caminho completo do arquivo de entrada (.txt)
-- **Argumento 2**: Caminho completo do arquivo de saída (.txt)
-- **Saída**: Sempre salva em arquivo (nunca imprime no terminal)
-
-## Geração de SVG (Exemplo)
-
-O arquivo `exemplo.py` demonstra como os desenhos ColorArt podem ser convertidos para formato SVG:
-
-```python
-import svgwrite
-
-dwg = svgwrite.Drawing('output.svg', size=('800px', '600px'))
-dwg.add(dwg.circle(center=(100, 100), r=50, fill='red'))
-dwg.add(dwg.rect(insert=(200, 150), size=(100, 80), fill='blue'))
-dwg.add(dwg.line(start=(50, 50), end=(300, 300), stroke='green'))
-dwg.save()
-```
+- Canvas fixo de 800x600 pixels
+- Apenas formas geométricas básicas
+- Sem suporte a animações
+- Sem operações matemáticas complexas
 
 ## Extensões Futuras
 
-O projeto pode ser estendido com:
-- Análise sintática completa
-- Análise semântica (verificação de cores declaradas)
-- Gerador de código SVG automático
-- Suporte a mais formas geométricas (polígonos, elipses)
-- Transformações (rotação, escala, translação)
+- Suporte a gradientes
+- Transformações (rotação, escala)
+- Texto e fontes
+- Animações SVG
+- Canvas configurável
+- Mais formas geométricas
 
-## Arquivos de Configuração
+## Exemplo de Saída SVG
 
-- `.gitignore`: Arquivos ignorados pelo Git (gerados pelo ANTLR4, cache Python)
-- `README.md`: Esta documentação
+A partir do código ColorArt:
+```
+cor { id=vermelho, valor="#FF0000" }
+circulo { centro=[100, 100], raio=50, cor=[vermelho] }
+```
 
-## Estrutura da Gramática
+Gera o SVG:
+```svg
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+<circle cx="100" cy="100" r="50" fill="#FF0000" stroke="black" stroke-width="2"/>
+</svg>
+```
 
-A gramática `colorart.g4` define:
-- **Programa**: Declaração de canvas seguida de declarações de cor e forma
-- **Declarações**: Canvas, cores e formas geométricas
-- **Tokens**: Identificadores, números, cores hexadecimais
-- **Comentários**: Linhas iniciadas com `%`
+## Como Contribuir
+
+1. Adicione novos casos de teste em `casos-de-teste/entradas/`
+2. Execute `python3 testador.py` para verificar se tudo funciona
+3. Documente novas funcionalidades neste README
+
+## Licença
+
+Este projeto foi desenvolvido como trabalho acadêmico para a disciplina de Compiladores.

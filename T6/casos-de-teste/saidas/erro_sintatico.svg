@@ -1,0 +1,39 @@
+Erro sintático na linha 9, coluna 0: mismatched input 'retangulo' expecting {',', '}'}
+Traceback (most recent call last):
+  File "/home/arthur/Desktop/College/Compiladores/Compiladores/compiladores-t6/color-art/ColorArtParser.py", line 641, in circle
+    self._errHandler.sync(self)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/linuxbrew/.linuxbrew/lib/python3.13/site-packages/antlr4/error/ErrorStrategy.py", line 231, in sync
+    raise InputMismatchException(recognizer)
+antlr4.error.Errors.InputMismatchException: None
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/arthur/Desktop/College/Compiladores/Compiladores/compiladores-t6/color-art/colorart.py", line 66, in main
+    arvore = parser.programa()
+  File "/home/arthur/Desktop/College/Compiladores/Compiladores/compiladores-t6/color-art/ColorArtParser.py", line 231, in programa
+    self.shape()
+    ~~~~~~~~~~^^
+  File "/home/arthur/Desktop/College/Compiladores/Compiladores/compiladores-t6/color-art/ColorArtParser.py", line 372, in shape
+    self.circle()
+    ~~~~~~~~~~~^^
+  File "/home/arthur/Desktop/College/Compiladores/Compiladores/compiladores-t6/color-art/ColorArtParser.py", line 662, in circle
+    self._errHandler.reportError(self, re)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/linuxbrew/.linuxbrew/lib/python3.13/site-packages/antlr4/error/ErrorStrategy.py", line 128, in reportError
+    self.reportInputMismatch(recognizer, e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/linuxbrew/.linuxbrew/lib/python3.13/site-packages/antlr4/error/ErrorStrategy.py", line 275, in reportInputMismatch
+    recognizer.notifyErrorListeners(msg, e.offendingToken, e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/linuxbrew/.linuxbrew/lib/python3.13/site-packages/antlr4/Parser.py", line 322, in notifyErrorListeners
+    listener.syntaxError(self, offendingToken, line, column, msg, e)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/linuxbrew/.linuxbrew/lib/python3.13/site-packages/antlr4/error/ErrorListener.py", line 60, in syntaxError
+    delegate.syntaxError(recognizer, offendingSymbol, line, column, msg, e)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/arthur/Desktop/College/Compiladores/Compiladores/compiladores-t6/color-art/colorart.py", line 24, in syntaxError
+    raise SyntaxError(error_message)
+SyntaxError: Erro sintático na linha 9, coluna 0: mismatched input 'retangulo' expecting {',', '}'}
+

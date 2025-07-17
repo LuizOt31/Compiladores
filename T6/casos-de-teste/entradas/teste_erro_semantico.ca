@@ -1,0 +1,12 @@
+// Teste de erro semântico
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0000FF" }
+
+// Erro semântico: declaração duplicada
+cor { id=vermelho, valor="#AA0000" }
+
+// Erro semântico: cor não declarada
+circulo { centro=[100, 100], raio=50, cor=[verde] }
+
+// Erro semântico: variável não declarada sendo referenciada
+retangulo { posicao=[200, 50], largura=100, altura=80, cor=[amarelo] } 
