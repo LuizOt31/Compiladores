@@ -2,6 +2,7 @@ canvas 800x600;
 
 color red = #FF0000;
 color yellow = #ff00a6;
+color aaaaaaaaaaaaaaa = #999999;
 
 circle 100 100 radius 50 fill greeeeeeeeeen;
 square 50 50 width 50 fill yellow;

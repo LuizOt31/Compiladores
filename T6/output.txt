@@ -1,1 +1,22 @@
-Analise lexica concluida sem erros.
+<'canvas','canvas'>
+<'800',UNKNOWN>
+<'-','-'>
+<'600',UNKNOWN>
+<';',';'>
+<'color','color'>
+<'red',UNKNOWN>
+<'=','='>
+<'100',UNKNOWN>
+<',',','>
+<'1000',UNKNOWN>
+<',',','>
+<'1000',UNKNOWN>
+<';',';'>
+<'circle','circle'>
+<'100',UNKNOWN>
+<'100',UNKNOWN>
+<'radius','radius'>
+<'50',UNKNOWN>
+<'fill',INT>
+<'red',UNKNOWN>
+<';',';'>

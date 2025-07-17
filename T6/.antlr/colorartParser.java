@@ -16,32 +16,34 @@ public class colorartParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, VAR=16, HEXCOLOR=17, 
-		INT=18, WS=19, COMMENT=20;
+		T__0=1, T__1=2, T__2=3, T__3=4, CANVAS=5, COLOR=6, CIRCLE=7, RECTANGLE=8, 
+		SQUARE=9, LINE=10, RADIUS=11, WIDTH=12, HEIGHT=13, FILL=14, STROKE=15, 
+		TO=16, VAR=17, INT=18, WS=19, COMMENT=20;
 	public static final int
 		RULE_program = 0, RULE_canvasDecl = 1, RULE_colorDecl = 2, RULE_shapeDecl = 3, 
-		RULE_circleDecl = 4, RULE_rectangleDecl = 5, RULE_squareDecl = 6, RULE_lineDecl = 7;
+		RULE_circleDecl = 4, RULE_rectangleDecl = 5, RULE_squareDecl = 6, RULE_lineDecl = 7, 
+		RULE_rgbColor = 8;
 	private static String[] makeRuleNames() {
 		return new String[] {
 			"program", "canvasDecl", "colorDecl", "shapeDecl", "circleDecl", "rectangleDecl", 
-			"squareDecl", "lineDecl"
+			"squareDecl", "lineDecl", "rgbColor"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'canvas'", "'x'", "';'", "'color'", "'='", "'circle'", "'radius'", 
-			"'fill'", "'rectangle'", "'width'", "'height'", "'square'", "'line'", 
-			"'to'", "'stroke'"
+			null, "'-'", "';'", "'='", "','", "'canvas'", "'color'", "'circle'", 
+			"'rectangle'", "'square'", "'line'", "'radius'", "'width'", "'height'", 
+			"'fill'", "'stroke'", "'to'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, "VAR", "HEXCOLOR", "INT", "WS", "COMMENT"
+			null, null, null, null, null, "CANVAS", "COLOR", "CIRCLE", "RECTANGLE", 
+			"SQUARE", "LINE", "RADIUS", "WIDTH", "HEIGHT", "FILL", "STROKE", "TO", 
+			"VAR", "INT", "WS", "COMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -117,14 +119,6 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterProgram(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitProgram(this);
-		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -134,27 +128,28 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(16);
+			setState(18);
 			canvasDecl();
-			setState(21);
+			setState(23);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 8784L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 1984L) != 0)) {
 				{
-				setState(19);
+				setState(21);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
-				case T__3:
+				case COLOR:
 					{
-					setState(17);
+					setState(19);
 					colorDecl();
 					}
 					break;
-				case T__5:
-				case T__8:
-				case T__12:
+				case CIRCLE:
+				case RECTANGLE:
+				case SQUARE:
+				case LINE:
 					{
-					setState(18);
+					setState(20);
 					shapeDecl();
 					}
 					break;
@@ -162,11 +157,11 @@ public class colorartParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(23);
+				setState(25);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(24);
+			setState(26);
 			match(EOF);
 			}
 		}
@@ -183,6 +178,7 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class CanvasDeclContext extends ParserRuleContext {
+		public TerminalNode CANVAS() { return getToken(colorartParser.CANVAS, 0); }
 		public List<TerminalNode> INT() { return getTokens(colorartParser.INT); }
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
@@ -191,14 +187,6 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_canvasDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterCanvasDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitCanvasDecl(this);
-		}
 	}
 
 	public final CanvasDeclContext canvasDecl() throws RecognitionException {
@@ -207,16 +195,16 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(26);
-			match(T__0);
-			setState(27);
-			match(INT);
 			setState(28);
-			match(T__1);
+			match(CANVAS);
 			setState(29);
 			match(INT);
 			setState(30);
-			match(T__2);
+			match(T__0);
+			setState(31);
+			match(INT);
+			setState(32);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -232,20 +220,15 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class ColorDeclContext extends ParserRuleContext {
+		public TerminalNode COLOR() { return getToken(colorartParser.COLOR, 0); }
 		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
-		public TerminalNode HEXCOLOR() { return getToken(colorartParser.HEXCOLOR, 0); }
+		public RgbColorContext rgbColor() {
+			return getRuleContext(RgbColorContext.class,0);
+		}
 		public ColorDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_colorDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterColorDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitColorDecl(this);
-		}
 	}
 
 	public final ColorDeclContext colorDecl() throws RecognitionException {
@@ -254,16 +237,16 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(32);
-			match(T__3);
-			setState(33);
-			match(VAR);
 			setState(34);
-			match(T__4);
+			match(COLOR);
 			setState(35);
-			match(HEXCOLOR);
+			match(VAR);
 			setState(36);
 			match(T__2);
+			setState(37);
+			rgbColor();
+			setState(38);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -288,46 +271,48 @@ public class colorartParser extends Parser {
 		public LineDeclContext lineDecl() {
 			return getRuleContext(LineDeclContext.class,0);
 		}
+		public SquareDeclContext squareDecl() {
+			return getRuleContext(SquareDeclContext.class,0);
+		}
 		public ShapeDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_shapeDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterShapeDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitShapeDecl(this);
-		}
 	}
 
 	public final ShapeDeclContext shapeDecl() throws RecognitionException {
 		ShapeDeclContext _localctx = new ShapeDeclContext(_ctx, getState());
 		enterRule(_localctx, 6, RULE_shapeDecl);
 		try {
-			setState(41);
+			setState(44);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__5:
+			case CIRCLE:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(38);
+				setState(40);
 				circleDecl();
 				}
 				break;
-			case T__8:
+			case RECTANGLE:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(39);
+				setState(41);
 				rectangleDecl();
 				}
 				break;
-			case T__12:
+			case LINE:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(40);
+				setState(42);
 				lineDecl();
+				}
+				break;
+			case SQUARE:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(43);
+				squareDecl();
 				}
 				break;
 			default:
@@ -347,23 +332,18 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class CircleDeclContext extends ParserRuleContext {
+		public TerminalNode CIRCLE() { return getToken(colorartParser.CIRCLE, 0); }
 		public List<TerminalNode> INT() { return getTokens(colorartParser.INT); }
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
+		public TerminalNode RADIUS() { return getToken(colorartParser.RADIUS, 0); }
+		public TerminalNode FILL() { return getToken(colorartParser.FILL, 0); }
 		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public CircleDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_circleDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterCircleDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitCircleDecl(this);
-		}
 	}
 
 	public final CircleDeclContext circleDecl() throws RecognitionException {
@@ -372,22 +352,22 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
-			match(T__5);
-			setState(44);
-			match(INT);
-			setState(45);
-			match(INT);
 			setState(46);
-			match(T__6);
+			match(CIRCLE);
 			setState(47);
 			match(INT);
 			setState(48);
-			match(T__7);
+			match(INT);
 			setState(49);
-			match(VAR);
+			match(RADIUS);
 			setState(50);
-			match(T__2);
+			match(INT);
+			setState(51);
+			match(FILL);
+			setState(52);
+			match(VAR);
+			setState(53);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -403,23 +383,19 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class RectangleDeclContext extends ParserRuleContext {
+		public TerminalNode RECTANGLE() { return getToken(colorartParser.RECTANGLE, 0); }
 		public List<TerminalNode> INT() { return getTokens(colorartParser.INT); }
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
+		public TerminalNode WIDTH() { return getToken(colorartParser.WIDTH, 0); }
+		public TerminalNode HEIGHT() { return getToken(colorartParser.HEIGHT, 0); }
+		public TerminalNode FILL() { return getToken(colorartParser.FILL, 0); }
 		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public RectangleDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rectangleDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterRectangleDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitRectangleDecl(this);
-		}
 	}
 
 	public final RectangleDeclContext rectangleDecl() throws RecognitionException {
@@ -428,26 +404,26 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(52);
-			match(T__8);
-			setState(53);
-			match(INT);
-			setState(54);
-			match(INT);
 			setState(55);
-			match(T__9);
+			match(RECTANGLE);
 			setState(56);
 			match(INT);
 			setState(57);
-			match(T__10);
-			setState(58);
 			match(INT);
+			setState(58);
+			match(WIDTH);
 			setState(59);
-			match(T__7);
+			match(INT);
 			setState(60);
-			match(VAR);
+			match(HEIGHT);
 			setState(61);
-			match(T__2);
+			match(INT);
+			setState(62);
+			match(FILL);
+			setState(63);
+			match(VAR);
+			setState(64);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -463,23 +439,18 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class SquareDeclContext extends ParserRuleContext {
+		public TerminalNode SQUARE() { return getToken(colorartParser.SQUARE, 0); }
 		public List<TerminalNode> INT() { return getTokens(colorartParser.INT); }
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
+		public TerminalNode WIDTH() { return getToken(colorartParser.WIDTH, 0); }
+		public TerminalNode FILL() { return getToken(colorartParser.FILL, 0); }
 		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public SquareDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_squareDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterSquareDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitSquareDecl(this);
-		}
 	}
 
 	public final SquareDeclContext squareDecl() throws RecognitionException {
@@ -488,22 +459,22 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(63);
-			match(T__11);
-			setState(64);
-			match(INT);
-			setState(65);
-			match(INT);
 			setState(66);
-			match(T__9);
+			match(SQUARE);
 			setState(67);
 			match(INT);
 			setState(68);
-			match(T__7);
+			match(INT);
 			setState(69);
-			match(VAR);
+			match(WIDTH);
 			setState(70);
-			match(T__2);
+			match(INT);
+			setState(71);
+			match(FILL);
+			setState(72);
+			match(VAR);
+			setState(73);
+			match(T__1);
 			}
 		}
 		catch (RecognitionException re) {
@@ -519,23 +490,18 @@ public class colorartParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class LineDeclContext extends ParserRuleContext {
+		public TerminalNode LINE() { return getToken(colorartParser.LINE, 0); }
 		public List<TerminalNode> INT() { return getTokens(colorartParser.INT); }
 		public TerminalNode INT(int i) {
 			return getToken(colorartParser.INT, i);
 		}
+		public TerminalNode TO() { return getToken(colorartParser.TO, 0); }
+		public TerminalNode STROKE() { return getToken(colorartParser.STROKE, 0); }
 		public TerminalNode VAR() { return getToken(colorartParser.VAR, 0); }
 		public LineDeclContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_lineDecl; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterLineDecl(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitLineDecl(this);
-		}
 	}
 
 	public final LineDeclContext lineDecl() throws RecognitionException {
@@ -544,24 +510,65 @@ public class colorartParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(72);
-			match(T__12);
-			setState(73);
-			match(INT);
-			setState(74);
-			match(INT);
 			setState(75);
-			match(T__13);
+			match(LINE);
 			setState(76);
 			match(INT);
 			setState(77);
 			match(INT);
 			setState(78);
-			match(T__14);
+			match(TO);
 			setState(79);
-			match(VAR);
+			match(INT);
 			setState(80);
-			match(T__2);
+			match(INT);
+			setState(81);
+			match(STROKE);
+			setState(82);
+			match(VAR);
+			setState(83);
+			match(T__1);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class RgbColorContext extends ParserRuleContext {
+		public List<TerminalNode> INT() { return getTokens(colorartParser.INT); }
+		public TerminalNode INT(int i) {
+			return getToken(colorartParser.INT, i);
+		}
+		public RgbColorContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_rgbColor; }
+	}
+
+	public final RgbColorContext rgbColor() throws RecognitionException {
+		RgbColorContext _localctx = new RgbColorContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_rgbColor);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(85);
+			match(INT);
+			setState(86);
+			match(T__3);
+			setState(87);
+			match(INT);
+			setState(88);
+			match(T__3);
+			setState(89);
+			match(INT);
 			}
 		}
 		catch (RecognitionException re) {
@@ -576,53 +583,57 @@ public class colorartParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0014S\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0014\\\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
-		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0005\u0000\u0014\b\u0000\n\u0000\f\u0000"+
-		"\u0017\t\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002"+
-		"\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003\u0001\u0003"+
-		"\u0003\u0003*\b\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004"+
-		"\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
-		"\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007"+
-		"\u0000\u0000\b\u0000\u0002\u0004\u0006\b\n\f\u000e\u0000\u0000N\u0000"+
-		"\u0010\u0001\u0000\u0000\u0000\u0002\u001a\u0001\u0000\u0000\u0000\u0004"+
-		" \u0001\u0000\u0000\u0000\u0006)\u0001\u0000\u0000\u0000\b+\u0001\u0000"+
-		"\u0000\u0000\n4\u0001\u0000\u0000\u0000\f?\u0001\u0000\u0000\u0000\u000e"+
-		"H\u0001\u0000\u0000\u0000\u0010\u0015\u0003\u0002\u0001\u0000\u0011\u0014"+
-		"\u0003\u0004\u0002\u0000\u0012\u0014\u0003\u0006\u0003\u0000\u0013\u0011"+
-		"\u0001\u0000\u0000\u0000\u0013\u0012\u0001\u0000\u0000\u0000\u0014\u0017"+
-		"\u0001\u0000\u0000\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0015\u0016"+
-		"\u0001\u0000\u0000\u0000\u0016\u0018\u0001\u0000\u0000\u0000\u0017\u0015"+
-		"\u0001\u0000\u0000\u0000\u0018\u0019\u0005\u0000\u0000\u0001\u0019\u0001"+
-		"\u0001\u0000\u0000\u0000\u001a\u001b\u0005\u0001\u0000\u0000\u001b\u001c"+
-		"\u0005\u0012\u0000\u0000\u001c\u001d\u0005\u0002\u0000\u0000\u001d\u001e"+
-		"\u0005\u0012\u0000\u0000\u001e\u001f\u0005\u0003\u0000\u0000\u001f\u0003"+
-		"\u0001\u0000\u0000\u0000 !\u0005\u0004\u0000\u0000!\"\u0005\u0010\u0000"+
-		"\u0000\"#\u0005\u0005\u0000\u0000#$\u0005\u0011\u0000\u0000$%\u0005\u0003"+
-		"\u0000\u0000%\u0005\u0001\u0000\u0000\u0000&*\u0003\b\u0004\u0000\'*\u0003"+
-		"\n\u0005\u0000(*\u0003\u000e\u0007\u0000)&\u0001\u0000\u0000\u0000)\'"+
-		"\u0001\u0000\u0000\u0000)(\u0001\u0000\u0000\u0000*\u0007\u0001\u0000"+
-		"\u0000\u0000+,\u0005\u0006\u0000\u0000,-\u0005\u0012\u0000\u0000-.\u0005"+
-		"\u0012\u0000\u0000./\u0005\u0007\u0000\u0000/0\u0005\u0012\u0000\u0000"+
-		"01\u0005\b\u0000\u000012\u0005\u0010\u0000\u000023\u0005\u0003\u0000\u0000"+
-		"3\t\u0001\u0000\u0000\u000045\u0005\t\u0000\u000056\u0005\u0012\u0000"+
-		"\u000067\u0005\u0012\u0000\u000078\u0005\n\u0000\u000089\u0005\u0012\u0000"+
-		"\u00009:\u0005\u000b\u0000\u0000:;\u0005\u0012\u0000\u0000;<\u0005\b\u0000"+
-		"\u0000<=\u0005\u0010\u0000\u0000=>\u0005\u0003\u0000\u0000>\u000b\u0001"+
-		"\u0000\u0000\u0000?@\u0005\f\u0000\u0000@A\u0005\u0012\u0000\u0000AB\u0005"+
-		"\u0012\u0000\u0000BC\u0005\n\u0000\u0000CD\u0005\u0012\u0000\u0000DE\u0005"+
-		"\b\u0000\u0000EF\u0005\u0010\u0000\u0000FG\u0005\u0003\u0000\u0000G\r"+
-		"\u0001\u0000\u0000\u0000HI\u0005\r\u0000\u0000IJ\u0005\u0012\u0000\u0000"+
-		"JK\u0005\u0012\u0000\u0000KL\u0005\u000e\u0000\u0000LM\u0005\u0012\u0000"+
-		"\u0000MN\u0005\u0012\u0000\u0000NO\u0005\u000f\u0000\u0000OP\u0005\u0010"+
-		"\u0000\u0000PQ\u0005\u0003\u0000\u0000Q\u000f\u0001\u0000\u0000\u0000"+
-		"\u0003\u0013\u0015)";
+		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
+		"\b\u0007\b\u0001\u0000\u0001\u0000\u0001\u0000\u0005\u0000\u0016\b\u0000"+
+		"\n\u0000\f\u0000\u0019\t\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0001\u0003\u0003\u0003-\b\u0003\u0001\u0004\u0001"+
+		"\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001"+
+		"\u0004\u0001\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001"+
+		"\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001"+
+		"\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001"+
+		"\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001"+
+		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0001"+
+		"\u0007\u0001\u0007\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001\b\u0001"+
+		"\b\u0000\u0000\t\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0000\u0000"+
+		"W\u0000\u0012\u0001\u0000\u0000\u0000\u0002\u001c\u0001\u0000\u0000\u0000"+
+		"\u0004\"\u0001\u0000\u0000\u0000\u0006,\u0001\u0000\u0000\u0000\b.\u0001"+
+		"\u0000\u0000\u0000\n7\u0001\u0000\u0000\u0000\fB\u0001\u0000\u0000\u0000"+
+		"\u000eK\u0001\u0000\u0000\u0000\u0010U\u0001\u0000\u0000\u0000\u0012\u0017"+
+		"\u0003\u0002\u0001\u0000\u0013\u0016\u0003\u0004\u0002\u0000\u0014\u0016"+
+		"\u0003\u0006\u0003\u0000\u0015\u0013\u0001\u0000\u0000\u0000\u0015\u0014"+
+		"\u0001\u0000\u0000\u0000\u0016\u0019\u0001\u0000\u0000\u0000\u0017\u0015"+
+		"\u0001\u0000\u0000\u0000\u0017\u0018\u0001\u0000\u0000\u0000\u0018\u001a"+
+		"\u0001\u0000\u0000\u0000\u0019\u0017\u0001\u0000\u0000\u0000\u001a\u001b"+
+		"\u0005\u0000\u0000\u0001\u001b\u0001\u0001\u0000\u0000\u0000\u001c\u001d"+
+		"\u0005\u0005\u0000\u0000\u001d\u001e\u0005\u0012\u0000\u0000\u001e\u001f"+
+		"\u0005\u0001\u0000\u0000\u001f \u0005\u0012\u0000\u0000 !\u0005\u0002"+
+		"\u0000\u0000!\u0003\u0001\u0000\u0000\u0000\"#\u0005\u0006\u0000\u0000"+
+		"#$\u0005\u0011\u0000\u0000$%\u0005\u0003\u0000\u0000%&\u0003\u0010\b\u0000"+
+		"&\'\u0005\u0002\u0000\u0000\'\u0005\u0001\u0000\u0000\u0000(-\u0003\b"+
+		"\u0004\u0000)-\u0003\n\u0005\u0000*-\u0003\u000e\u0007\u0000+-\u0003\f"+
+		"\u0006\u0000,(\u0001\u0000\u0000\u0000,)\u0001\u0000\u0000\u0000,*\u0001"+
+		"\u0000\u0000\u0000,+\u0001\u0000\u0000\u0000-\u0007\u0001\u0000\u0000"+
+		"\u0000./\u0005\u0007\u0000\u0000/0\u0005\u0012\u0000\u000001\u0005\u0012"+
+		"\u0000\u000012\u0005\u000b\u0000\u000023\u0005\u0012\u0000\u000034\u0005"+
+		"\u000e\u0000\u000045\u0005\u0011\u0000\u000056\u0005\u0002\u0000\u0000"+
+		"6\t\u0001\u0000\u0000\u000078\u0005\b\u0000\u000089\u0005\u0012\u0000"+
+		"\u00009:\u0005\u0012\u0000\u0000:;\u0005\f\u0000\u0000;<\u0005\u0012\u0000"+
+		"\u0000<=\u0005\r\u0000\u0000=>\u0005\u0012\u0000\u0000>?\u0005\u000e\u0000"+
+		"\u0000?@\u0005\u0011\u0000\u0000@A\u0005\u0002\u0000\u0000A\u000b\u0001"+
+		"\u0000\u0000\u0000BC\u0005\t\u0000\u0000CD\u0005\u0012\u0000\u0000DE\u0005"+
+		"\u0012\u0000\u0000EF\u0005\f\u0000\u0000FG\u0005\u0012\u0000\u0000GH\u0005"+
+		"\u000e\u0000\u0000HI\u0005\u0011\u0000\u0000IJ\u0005\u0002\u0000\u0000"+
+		"J\r\u0001\u0000\u0000\u0000KL\u0005\n\u0000\u0000LM\u0005\u0012\u0000"+
+		"\u0000MN\u0005\u0012\u0000\u0000NO\u0005\u0010\u0000\u0000OP\u0005\u0012"+
+		"\u0000\u0000PQ\u0005\u0012\u0000\u0000QR\u0005\u000f\u0000\u0000RS\u0005"+
+		"\u0011\u0000\u0000ST\u0005\u0002\u0000\u0000T\u000f\u0001\u0000\u0000"+
+		"\u0000UV\u0005\u0012\u0000\u0000VW\u0005\u0004\u0000\u0000WX\u0005\u0012"+
+		"\u0000\u0000XY\u0005\u0004\u0000\u0000YZ\u0005\u0012\u0000\u0000Z\u0011"+
+		"\u0001\u0000\u0000\u0000\u0003\u0015\u0017,";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -2,36 +2,32 @@ grammar colorart;
 
 program         : canvasDecl (colorDecl | shapeDecl)* EOF ;
 
-// Define o tamanho da tela do canva
-canvasDecl      : 'canvas' INT 'x' INT ';' ;
+canvasDecl      : CANVAS INT '-' INT ';' ;
+colorDecl       : COLOR VAR '=' rgbColor ';' ;
+shapeDecl       : circleDecl | rectangleDecl | lineDecl | squareDecl ;
 
-// Definir cor
-colorDecl       : 'color' VAR '=' HEXCOLOR ';' ;
+circleDecl      : CIRCLE INT INT RADIUS INT FILL VAR ';' ;
+rectangleDecl   : RECTANGLE INT INT WIDTH INT HEIGHT INT FILL VAR ';' ;
+squareDecl      : SQUARE INT INT WIDTH INT FILL VAR ';' ;
+lineDecl        : LINE INT INT TO INT INT STROKE VAR ';' ;
 
-// Definir a forma geometrica
-shapeDecl       : circleDecl
-                | rectangleDecl
-                | lineDecl ;
-
-// Definir um circulo
-circleDecl      : 'circle' INT INT 'radius' INT 'fill' VAR ';' ;
-
-// Definir um retangulo
-rectangleDecl   : 'rectangle' INT INT 'width' INT 'height' INT 'fill' VAR ';' ;
-
-squareDecl: 'square' INT INT 'width' INT 'fill' VAR ';';
-
-// Definir um linha
-lineDecl        : 'line' INT INT 'to' INT INT 'stroke' VAR ';' ;
+rgbColor        : INT ',' INT ',' INT ;
 
 // Tokens
-VAR              : [a-zA-Z_][a-zA-Z_0-9]* ;
+CANVAS  : 'canvas' ;
+COLOR   : 'color' ;
+CIRCLE  : 'circle' ;
+RECTANGLE : 'rectangle' ;
+SQUARE  : 'square' ;
+LINE    : 'line' ;
+RADIUS  : 'radius' ;
+WIDTH   : 'width' ;
+HEIGHT  : 'height' ;
+FILL    : 'fill' ;
+STROKE  : 'stroke' ;
+TO      : 'to' ;
 
-// formato para definir uma cor
-HEXCOLOR        : '#' [0-9a-fA-F]{6} ;
-
-INT             : [0-9]+ ;
-
-WS              : [ \t\r\n]+ -> skip ;
-
-COMMENT : '%' ~[\r\n]* -> skip ;
+VAR             : ('a'..'z'|'A'..'Z'|'_')('a'..'z'|'A'..'Z'|'0'..'9'|'_')* ;
+INT             : ('0'..'9')+ ;
+WS              : ( ' ' | '\t' | '\r' | '\n' ) -> skip ;
+COMMENT         : '%' ~[\r\n]* -> skip ;

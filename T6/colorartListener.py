@@ -80,5 +80,14 @@ class colorartListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by colorartParser#rgbColor.
+    def enterRgbColor(self, ctx:colorartParser.RgbColorContext):
+        pass
+
+    # Exit a parse tree produced by colorartParser#rgbColor.
+    def exitRgbColor(self, ctx:colorartParser.RgbColorContext):
+        pass
+
+
 
 del colorartParser
