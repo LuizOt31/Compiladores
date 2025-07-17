@@ -1,0 +1,6 @@
+% Exemplo 1
+canvas 800-600;
+
+colr vermelho = 255, 0, 0;
+
+circle 150 150 radius 80 fill vermelho;

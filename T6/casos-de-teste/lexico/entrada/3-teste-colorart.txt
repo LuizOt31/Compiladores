@@ -1,7 +1,0 @@
-canvas 800x600;
-% Ignora essa lnha e ve o erro abaixo no ponto e virgula
-color red = #FF0000
-color green = #0dff00;
-
-circle 100 100 radius 50 fill red;
-square 50 50 width 50 fill green;

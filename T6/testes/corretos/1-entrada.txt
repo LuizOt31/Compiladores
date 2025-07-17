@@ -1,0 +1,12 @@
+% Exemplo 1: Formas geométricas básicas
+canvas 800-600;
+
+% Definição das cores primárias
+color vermelho = 255, 0, 0;
+color azul_ceu = 135, 206, 235;
+color verde_grama = 34, 139, 34;
+
+% Desenho das formas
+circle 150 150 radius 80 fill vermelho;
+rectangle 300 250 width 200 height 100 fill azul_ceu;
+line 50 550 to 750 550 stroke verde_grama;

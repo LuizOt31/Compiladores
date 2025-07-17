@@ -1,5 +1,0 @@
-canvas 700x600
-
-colr yellow = #ff009d;
-
-line 20 20 to 10 10 stroke yellow;

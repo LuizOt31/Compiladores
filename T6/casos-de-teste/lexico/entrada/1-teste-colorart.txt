@@ -1,6 +1,0 @@
-% Meu desenho em ColorArt
-canvas 800-600;
-
-color red = 255,0,0;
-
-circle 100 100 radius 50 fill red;

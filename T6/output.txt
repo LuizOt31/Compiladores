@@ -1,22 +1,6 @@
-<'canvas','canvas'>
-<'800',UNKNOWN>
-<'-','-'>
-<'600',UNKNOWN>
-<';',';'>
-<'color','color'>
-<'red',UNKNOWN>
-<'=','='>
-<'100',UNKNOWN>
-<',',','>
-<'1000',UNKNOWN>
-<',',','>
-<'1000',UNKNOWN>
-<';',';'>
-<'circle','circle'>
-<'100',UNKNOWN>
-<'100',UNKNOWN>
-<'radius','radius'>
-<'50',UNKNOWN>
-<'fill',INT>
-<'red',UNKNOWN>
-<';',';'>
+import svgwrite
+dwg = svgwrite.Drawing('output.txt', size=('800px', '600px'), profile='tiny')
+dwg.add(dwg.circle(center=(150, 150), r=80, fill='rgb(255,0,0)'))
+dwg.add(dwg.rect(insert=(300, 250), size=('200px', '100px'), fill='rgb(135,206,235)'))
+dwg.add(dwg.line(start=(50, 550), end=(750, 550), stroke='rgb(34,139,34)'))
+dwg.save()

@@ -1,0 +1,11 @@
+% Teste mínimo para o compilador ColorArt
+
+canvas 200-200;
+
+% Apenas uma cor e uma forma serão declaradas aqui.
+color unicaCor = 80, 80, 220;
+
+% O resto do código foi comentado.
+% circle 100 100 radius 50 fill unicaCor;
+
+line 10 10 to 190 190 stroke unicaCor;

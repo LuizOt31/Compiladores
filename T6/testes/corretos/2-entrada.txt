@@ -1,0 +1,20 @@
+% Exemplo 2
+canvas 500-500;
+
+color cor_do_sol = 255, 215, 0;
+color cor_da_parede = 210, 180, 140;
+color cor_do_telhado = 139, 69, 19;
+color cor_da_porta = 110, 70, 20;
+color cor_do_ceu = 30,144,255;
+
+% Céu
+square 0 0 width 10000 fill cor_do_ceu;
+
+% Sol no canto da tela
+circle 420 80 radius 50 fill cor_do_sol;
+
+% Estrutura da casa
+square 150 250 width 200 fill cor_da_parede;
+line 140 260 to 250 180 stroke cor_do_telhado; % Lado esquerdo do telhado
+line 250 180 to 360 260 stroke cor_do_telhado; % Lado direito do telhado
+rectangle 225 350 width 50 height 100 fill cor_da_porta;
