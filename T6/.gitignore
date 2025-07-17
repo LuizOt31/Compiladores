@@ -1,0 +1,28 @@
+# Arquivos gerados pelo ANTLR
+LAParser.py
+LALexer.py
+LAVisitor.py
+LAListener.py
+LA.tokens
+LALexer.tokens
+LA.interp
+LALexer.interp
+
+# Cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de saída dos testes
+saida_gerada/*.txt
+saida_gerada/*
+!saida_gerada/.keep
+# Ambiente virtual
+.venv/
+venv/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*_debug.txt 
