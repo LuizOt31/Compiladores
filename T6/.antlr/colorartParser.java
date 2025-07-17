@@ -117,6 +117,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterProgram(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitProgram(this);
+		}
 	}
 
 	public final ProgramContext program() throws RecognitionException {
@@ -183,6 +191,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_canvasDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterCanvasDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitCanvasDecl(this);
+		}
 	}
 
 	public final CanvasDeclContext canvasDecl() throws RecognitionException {
@@ -222,6 +238,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_colorDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterColorDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitColorDecl(this);
+		}
 	}
 
 	public final ColorDeclContext colorDecl() throws RecognitionException {
@@ -268,6 +292,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_shapeDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterShapeDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitShapeDecl(this);
+		}
 	}
 
 	public final ShapeDeclContext shapeDecl() throws RecognitionException {
@@ -324,6 +356,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_circleDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterCircleDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitCircleDecl(this);
+		}
 	}
 
 	public final CircleDeclContext circleDecl() throws RecognitionException {
@@ -372,6 +412,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_rectangleDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterRectangleDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitRectangleDecl(this);
+		}
 	}
 
 	public final RectangleDeclContext rectangleDecl() throws RecognitionException {
@@ -424,6 +472,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_squareDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterSquareDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitSquareDecl(this);
+		}
 	}
 
 	public final SquareDeclContext squareDecl() throws RecognitionException {
@@ -472,6 +528,14 @@ public class colorartParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_lineDecl; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).enterLineDecl(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof colorartListener ) ((colorartListener)listener).exitLineDecl(this);
+		}
 	}
 
 	public final LineDeclContext lineDecl() throws RecognitionException {
