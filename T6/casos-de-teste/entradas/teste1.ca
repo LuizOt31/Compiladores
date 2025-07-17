@@ -1,0 +1,9 @@
+// Definindo cores
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0000FF" }
+cor { id=verde, valor="#00FF00" }
+
+// Desenhando formas simples
+circulo { centro=[100, 100], raio=50, cor=[vermelho] }
+retangulo { posicao=[200, 50], largura=100, altura=80, cor=[azul], borda=[verde] }
+linha { inicio=[50, 200], fim=[300, 250], cor=[verde], espessura=3 } 

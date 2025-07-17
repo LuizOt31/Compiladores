@@ -1,0 +1,19 @@
+// Teste complexo de múltiplos erros semânticos
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0000FF" }
+
+// Erro 1: Cor duplicada
+cor { id=vermelho, valor="#AA0000" }
+
+// Erro 2: Variável duplicada  
+variavel { id=tamanho, tipo=inteiro, valor=50 }
+variavel { id=tamanho, tipo=inteiro, valor=100 }
+
+// Erro 3: Cor não declarada
+circulo { centro=[100, 100], raio=50, cor=[verde] }
+
+// Erro 4: Múltiplas cores não declaradas
+retangulo { posicao=[200, 50], largura=100, altura=80, cor=[amarelo], borda=[roxo] }
+
+// Erro 5: Cor não declarada em polígono
+poligono { pontos=[0,0, 100,0, 50,100], cor=[laranja], borda=[preto] } 

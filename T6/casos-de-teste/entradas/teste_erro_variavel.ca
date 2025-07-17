@@ -1,0 +1,9 @@
+// Teste de erro semântico - variável duplicada
+cor { id=vermelho, valor="#FF0000" }
+
+variavel { id=tamanho, tipo=inteiro, valor=50 }
+
+// Erro semântico: variável já declarada
+variavel { id=tamanho, tipo=inteiro, valor=100 }
+
+circulo { centro=[100, 100], raio=50, cor=[vermelho] } 

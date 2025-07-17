@@ -1,0 +1,20 @@
+// Definindo cores e variáveis
+cor { id=laranja, valor="#FFA500" }
+cor { id=roxo, valor="#800080" }
+cor { id=preto, valor="#000000" }
+cor { id=azul, valor="#0000FF" }
+
+variavel { id=tamanho, tipo=inteiro, valor=60 }
+
+// Desenhando uma casa simples
+retangulo { posicao=[100, 200], largura=200, altura=150, cor=[laranja], borda=[preto] }
+
+// Telhado triangular
+poligono { pontos=[100,200, 200,100, 300,200], cor=[roxo], borda=[preto] }
+
+// Porta
+retangulo { posicao=[170, 280], largura=60, altura=70, cor=[preto] }
+
+// Janelas
+circulo { centro=[140, 240], raio=20, cor=[azul] }
+circulo { centro=[260, 240], raio=20, cor=[azul] } 

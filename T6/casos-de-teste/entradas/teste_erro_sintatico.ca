@@ -1,0 +1,9 @@
+// Teste de erro sintático - sintaxe incorreta
+cor { id=vermelho, valor="#FF0000" }
+cor { id=azul, valor="#0000FF" }
+
+// Erro: falta fecha chaves
+circulo { centro=[100, 100], raio=50, cor=[vermelho]
+
+// Erro: sintaxe incorreta - falta virgula
+retangulo { posicao=[200, 50] largura=100, altura=80, cor=[azul] } 

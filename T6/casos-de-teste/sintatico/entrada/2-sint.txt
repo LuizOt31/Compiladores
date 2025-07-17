@@ -1,3 +1,0 @@
-canvas 300x300;
-
-circle 100 radius 50 fill red;

@@ -1,0 +1,7 @@
+// Teste de erro léxico - caractere inválido
+cor { id=vermelho, valor="#FF0000" }
+
+// Erro: caractere @ inválido
+cor { id=azul@inválido, valor="#0000FF" }
+
+circulo { centro=[100, 100], raio=50, cor=[vermelho] } 
