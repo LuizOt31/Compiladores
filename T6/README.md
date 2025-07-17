@@ -303,6 +303,13 @@ Gera o SVG:
 2. Execute `python3 testador.py` para verificar se tudo funciona
 3. Documente novas funcionalidades neste README
 
+## Vídeo de Demonstração
+**Assista à demonstração completa do ColorArt:**  
+[Clique aqui para ver o vídeo no Google Drive](https://drive.google.com/file/d/1uCNakDi5qzgBcRFUS2lhZfBMEabRobXL/view?usp=sharing)  
+
+*(Mostra todos os recursos da linguagem, exemplos de uso e execução dos testes)*
+
+
 ## Licença
 
 Este projeto foi desenvolvido como trabalho acadêmico para a disciplina de Compiladores.
