@@ -53,8 +53,7 @@ def main():
         ("teste_erro_complexo.ca", "semantico", "Erro semântico - múltiplos erros")
     ]
     
-    # Criar pasta de saídas se não existir
-    os.makedirs("casos-de-teste/saidas", exist_ok=True)
+    os.makedirs("casos-de-teste/saidas-geradas", exist_ok=True)
     
     total_testes = len(testes_erro)
     testes_passou = 0
@@ -63,7 +62,7 @@ def main():
     
     for arquivo_teste, tipo_erro, descricao in testes_erro:
         arquivo_entrada = f"casos-de-teste/entradas/{arquivo_teste}"
-        arquivo_saida = f"casos-de-teste/saidas/erro_{tipo_erro}.svg"
+        arquivo_saida = f"casos-de-teste/saidas-geradas/erro_{tipo_erro}.svg"
         
         print(f"Teste {arquivo_teste}: {descricao}")
         print(f"  Esperado: {tipo_erro.upper()}", end=" -> ")

@@ -46,8 +46,7 @@ def main():
         print("ERRO: Pasta 'casos-de-teste/saidas-esperadas' não encontrada!")
         return
     
-    # Criar pasta de saídas se não existir
-    os.makedirs("casos-de-teste/saidas", exist_ok=True)
+    os.makedirs("casos-de-teste/saidas-geradas", exist_ok=True)
     
     # Buscar todos os arquivos de teste
     arquivos_entrada = glob.glob("casos-de-teste/entradas/teste*.ca")
@@ -64,7 +63,7 @@ def main():
     
     for arquivo_entrada in arquivos_entrada:
         nome_base = os.path.basename(arquivo_entrada).replace("teste", "").replace(".ca", "")
-        arquivo_saida = f"casos-de-teste/saidas/saida{nome_base}.svg"
+        arquivo_saida = f"casos-de-teste/saidas-geradas/saida{nome_base}.svg"
         arquivo_esperado = f"casos-de-teste/saidas-esperadas/saida{nome_base}.svg"
         
         print(f"Teste {nome_base}:", end=" ")
