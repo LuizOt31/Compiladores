@@ -1,52 +1,44 @@
+# compiler.py
+import sys
 from antlr4 import *
 from colorartLexer import colorartLexer
-from antlr4.error.ErrorListener import ErrorListener
-import sys
-import re
+from colorartParser import colorartParser
+from generateCode import CodeGenerator
 
-class CustomErrorListener(ErrorListener):
-    def __init__(self, output):
-        super().__init__()
-        self.output = output
-        self.error_found = False
-
-    def syntaxError(self, recognizer, offendingSymbol, line, column, msg, e):
-        self.error_found = True
-        simbolo = re.search(r"'(.*?)'", msg)
-        texto = simbolo.group(1) if simbolo else offendingSymbol.text
-        print(f"Linha {line}: {texto} - simbolo nao identificado", file=self.output)
-
-def main():
-    if len(sys.argv) < 3:
-        print("Uso: python3 script.py <arquivo_entrada> <arquivo_saida>")
+def main(argv):
+    if len(argv) < 3:
+        print("Uso: python3 compiler.py <arquivo_entrada.cal> <arquivo_saida.py>")
         return
 
-    entrada_path = FileStream(sys.argv[1], encoding="utf-8")
-    saida_path = sys.argv[2]
+    input_stream = FileStream(argv[1], encoding="utf-8")
+    output_py_path = argv[2]
+    
+    # Extrai o nome do arquivo de saída para o SVG
+    # Ex: se a saída for 'output/result.py', o svg será 'output/result.svg'
+    svg_filename = output_py_path.replace(".py", ".svg")
 
-    with open(saida_path, mode='w') as saida:
-        lexer = colorartLexer(entrada_path)
-        lexer.removeErrorListeners()
-        listener = CustomErrorListener(saida)
-        lexer.addErrorListener(listener)
+    # 1. Lexer
+    lexer = colorartLexer(input_stream)
+    stream = CommonTokenStream(lexer)
 
-        while True:
-            token = lexer.nextToken()
+    # 2. Parser
+    parser = colorartParser(stream)
+    tree = parser.program() # Começa a análise pela regra 'program'
 
-            if token.type == Token.EOF or listener.error_found:
-                break
+    # 3. Code Generation
+    # O nome do arquivo SVG que será salvo pelo script gerado
+    generator = CodeGenerator(svg_filename) 
+    walker = ParseTreeWalker()
+    walker.walk(generator, tree)
 
-            if token.channel == Token.DEFAULT_CHANNEL:
-                # Verifica se o tipo do token está dentro dos limites de symbolicNames
-                if token.type < len(lexer.symbolicNames) and lexer.symbolicNames[token.type] is not None:
-                    tipo = lexer.symbolicNames[token.type]
-                    if tipo in ['VAR', 'HEXCOLOR', 'INT']:
-                        print(f"<'{token.text}',{tipo}>", file=saida)
-                    else:
-                        print(f"<'{token.text}','{token.text}'>", file=saida)
-                else:
-                    # Token não reconhecido - isso não deveria acontecer se o error listener estiver funcionando
-                    print(f"<'{token.text}',UNKNOWN>", file=saida)
+    # Escreve o código Python gerado no arquivo de saída
+    generated_code = generator.get_generated_code()
+    with open(output_py_path, 'w', encoding='utf-8') as f:
+        f.write(generated_code)
+    
+    print(f"Compilação concluída! Script Python gerado em '{output_py_path}'")
+    print(f"Para gerar o SVG, execute: python3 {output_py_path}")
+
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
