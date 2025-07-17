@@ -1,0 +1,56 @@
+# Arquivos gerados pelo ANTLR4
+ColorArtParser.py
+ColorArtLexer.py
+ColorArtVisitor.py
+ColorArtListener.py
+ColorArt.tokens
+ColorArtLexer.tokens
+ColorArt.interp
+ColorArtLexer.interp
+
+# Cache e bytecode do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Arquivos de saída de testes
+casos-de-teste/saidas/*.svg
+*.svg
+output.txt
+teste*_resultado.txt
+*_debug.txt
+
+# Ambientes virtuais
+.venv/
+venv/
+venv_*/
+env/
+ENV/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# Logs
+*.log
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de configuração local
+config.local.py
+settings.local.py 

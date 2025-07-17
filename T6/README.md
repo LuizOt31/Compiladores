@@ -215,8 +215,7 @@ color-art/
 │   │   ├── teste_erro_variavel.ca  # Variável duplicada
 │   │   └── teste_erro_complexo.ca  # Múltiplos erros
 │   ├── saidas-esperadas/          # Saídas SVG de referência
-│   ├── saidas/                    # Saídas geradas pelos testes
-│   └── saidas-geradas/            # Saídas manuais para verificação
+│   └── saidas/                    # Saídas geradas pelos testes
 ├── antlr-4.13.0-complete.jar     # ANTLR4 JAR
 └── README.md                      # Esta documentação
 ```
